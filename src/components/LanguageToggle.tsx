@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
 
 type Language = 'pt-BR' | 'en-US';
 
@@ -47,12 +48,6 @@ const translations: Translations = {
     'en-US': 'Get 15% off your first purchase using the coupon'
   },
   takeOffer: { 'pt-BR': 'Aproveitar Oferta', 'en-US': 'Take Offer' },
-  
-  // Social media
-  followUs: { 'pt-BR': 'Siga-nos nas Redes Sociais', 'en-US': 'Follow Us on Social Media' },
-  instagram: { 'pt-BR': 'Instagram', 'en-US': 'Instagram' },
-  twitter: { 'pt-BR': 'Twitter', 'en-US': 'Twitter' },
-  facebook: { 'pt-BR': 'Facebook', 'en-US': 'Facebook' },
   
   // Footer
   allRightsReserved: { 'pt-BR': 'Todos os direitos reservados', 'en-US': 'All rights reserved' },
@@ -109,10 +104,8 @@ const translations: Translations = {
 
 export default function LanguageToggle() {
   const [currentLang, setCurrentLang] = useState<Language>('pt-BR');
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Get saved language from localStorage or browser language
     const savedLang = localStorage.getItem('kowalski-language') as Language;
     const browserLang = navigator.language;
     
@@ -128,96 +121,35 @@ export default function LanguageToggle() {
   const switchLanguage = (lang: Language) => {
     setCurrentLang(lang);
     localStorage.setItem('kowalski-language', lang);
-    setIsOpen(false);
-    
-    // Dispatch custom event to notify other components
     window.dispatchEvent(new CustomEvent('languageChange', { detail: lang }));
-    
-    // Force a complete page refresh to ensure all components update
     setTimeout(() => {
       window.location.reload();
     }, 100);
   };
 
-  const getFlag = (lang: Language) => {
-    return lang === 'pt-BR' ? '🇧🇷' : '🇺🇸';
-  };
-
-  const getLanguageName = (lang: Language) => {
-    return lang === 'pt-BR' ? 'PT' : 'EN';
-  };
-
   return (
     <div className="fixed bottom-6 right-6 z-50">
       <div className="relative">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="bg-black/80 backdrop-blur-md border border-lime/20 rounded-full p-3 shadow-lg hover:bg-black/90 transition-all duration-300 ease-smooth hover:scale-105 hover:border-lime/40 group"
-          aria-label="Toggle language"
-        >
-          <div className="flex items-center gap-2 text-lime">
-            <span className="text-lg">{getFlag(currentLang)}</span>
-            <span className="text-sm font-medium">{getLanguageName(currentLang)}</span>
-            <svg 
-              className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+        <div className="bg-black/80 backdrop-blur-md border border-lime/20 rounded-full p-3 shadow-lg">
+          <div className="flex items-center gap-3 text-lime">
+            <span className="text-sm font-medium">🇧🇷 PT</span>
+            <label className="relative block aspect-[2/0.75] w-16 rounded-full bg-gradient-to-br from-lime-100 via-lime-600 shadow-2xl shadow-lime-300 transition-all duration-300 hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-[length:100%_100%] cursor-pointer">
+              <input 
+                className="peer/input hidden" 
+                type="checkbox"
+                checked={currentLang === 'en-US'}
+                onChange={(e) => switchLanguage(e.target.checked ? 'en-US' : 'pt-BR')}
+              />
+              <div className="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white bg-gradient-to-t transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
+            </label>
+            <span className="text-sm font-medium">🇺🇸 EN</span>
           </div>
-        </button>
-
-        {isOpen && (
-          <div className="absolute bottom-full right-0 mb-2 bg-black/90 backdrop-blur-md border border-lime/20 rounded-xl shadow-xl overflow-hidden animate-slide-up">
-            <div className="p-2">
-              <button
-                onClick={() => switchLanguage('pt-BR')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-lime/10 ${
-                  currentLang === 'pt-BR' ? 'bg-lime/20 text-lime' : 'text-white hover:text-lime'
-                }`}
-              >
-                <span className="text-lg">🇧🇷</span>
-                <span className="text-sm font-medium">Português</span>
-                {currentLang === 'pt-BR' && (
-                  <svg className="w-4 h-4 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </button>
-              
-              <button
-                onClick={() => switchLanguage('en-US')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-lime/10 ${
-                  currentLang === 'en-US' ? 'bg-lime/20 text-lime' : 'text-white hover:text-lime'
-                }`}
-              >
-                <span className="text-lg">🇺🇸</span>
-                <span className="text-sm font-medium">English</span>
-                {currentLang === 'en-US' && (
-                  <svg className="w-4 h-4 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
-      
-      {/* Backdrop */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 -z-10" 
-          onClick={() => setIsOpen(false)}
-        />
-      )}
     </div>
   );
 }
 
-// Hook to use translations
 export function useTranslation() {
   const [currentLang, setCurrentLang] = useState<Language>('pt-BR');
   const [mounted, setMounted] = useState(false);
@@ -233,7 +165,6 @@ export function useTranslation() {
       setCurrentLang(event.detail);
     };
 
-    // Force update all components when language changes
     const handleStorageChange = () => {
       const newLang = localStorage.getItem('kowalski-language') as Language;
       if (newLang && ['pt-BR', 'en-US'].includes(newLang)) {
@@ -251,7 +182,7 @@ export function useTranslation() {
   }, []);
 
   const t = (key: string): string => {
-    if (!mounted) return key; // Return key while mounting to prevent hydration issues
+    if (!mounted) return key;
     return translations[key]?.[currentLang] || key;
   };
 

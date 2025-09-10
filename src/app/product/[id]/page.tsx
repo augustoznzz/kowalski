@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -7,10 +7,22 @@ import { products, Product } from "@/data/products";
 import { useCart } from "@/components/CartContext";
 import { useTranslation } from "@/components/LanguageToggle";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+interface ProductPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function ProductPage({ params }: ProductPageProps) {
   const { t } = useTranslation();
-  const product = products.find((p) => p.id === params.id);
+  const [productId, setProductId] = useState<string | null>(null);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    params.then(({ id }) => setProductId(id));
+  }, [params]);
+
+  if (!productId) return <div>Loading...</div>;
+
+  const product = products.find((p) => p.id === productId);
 
   if (!product) return notFound();
 

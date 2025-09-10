@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gilan:wght@500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,7 +16,7 @@
   --neutral-white: #3f3e3e; /* Mudando branco para cinza escuro */
   --neutral-gray: #1e1e1e; /* Cinza escuro para bordas */
   --neutral-gray-light: #2a2a2a;
-  --font-sans: 'Varela Round', var(--font-varela-round), system-ui, sans-serif;
+  --font-sans: 'Gilan', system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
 }
 

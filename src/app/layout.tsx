@@ -1,20 +1,12 @@
 
 // import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { Metadata } from 'next';
-import { Geist_Mono, Varela_Round } from 'next/font/google';
+import { Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/components/CartContext';
 import PageTransition from '@/components/PageTransition';
 import LanguageToggle from '@/components/LanguageToggle';
 import HeroNavbar from '@/components/HeroNavbar';
-
-const varelaRound = Varela_Round({
-  weight: '400',
-  subsets: ["latin"],
-  display: 'swap',
-  preload: true,
-  variable: "--font-varela-round",
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -59,8 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body 
-        className={`${varelaRound.variable} ${geistMono.variable} font-sans antialiased transition-all duration-300 ease-smooth preload`} 
-        style={{ backgroundColor: '#282828', color: '#eaffb7' }}
+        className={`${geistMono.variable} antialiased transition-all duration-300 ease-smooth preload`} 
+        style={{ backgroundColor: '#282828', color: '#eaffb7', fontFamily: 'Gilan, sans-serif' }}
       >
         <CartProvider>
           <HeroNavbar />

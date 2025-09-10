@@ -132,24 +132,17 @@ export default function HomeClient() {
       <footer className="w-full py-12 bg-black/95 border-t border-lime/20 mt-16 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 flex flex-col items-center">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">{t('followUs')}</h3>
+            <h3 className="text-2xl font-bold mb-4 gradient-text">Entre no nosso servidor do Discord!</h3>
             <div className="flex gap-6 justify-center">
-              {[
-                { icon: '📸', text: t('instagram'), url: 'https://instagram.com' },
-                { icon: '🐦', text: t('twitter'), url: 'https://twitter.com' },
-                { icon: '📘', text: t('facebook'), url: 'https://facebook.com' }
-              ].map((social, index) => (
-                <a 
-                  key={index}
-                  href={social.url} 
-                  target="_blank" 
-                  rel="noopener" 
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg hover:text-lime transition-all duration-300 hover:bg-lime/10 hover:scale-105"
-                >
-                  <span className="text-xl">{social.icon}</span>
-                  <span>{social.text}</span>
-                </a>
-              ))}
+              <a 
+                href="https://discord.gg/kowalski" 
+                target="_blank" 
+                rel="noopener" 
+                className="flex items-center gap-2 px-6 py-3 rounded-lg hover:text-lime transition-all duration-300 hover:bg-lime/10 hover:scale-105 bg-[#5865F2] text-white hover:bg-[#4752C4]"
+              >
+                <span className="text-xl">💬</span>
+                <span>Discord</span>
+              </a>
             </div>
           </div>
           <div className="text-sm text-center text-secondary">
