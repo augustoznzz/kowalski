@@ -4,7 +4,6 @@ export async function POST(req: NextRequest) {
   try {
     const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
     
-    // Validações de segurança
     if (!stripeSecretKey) {
       console.error("STRIPE_SECRET_KEY not configured");
       return NextResponse.json({ error: "Payment system not configured." }, { status: 500 });
@@ -15,7 +14,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid payment configuration." }, { status: 500 });
     }
 
-    // Warning para chaves de teste em produção
     if (process.env.NODE_ENV === 'production' && stripeSecretKey.startsWith('sk_test_')) {
       console.warn("WARNING: Using test keys in production environment!");
     }
@@ -24,15 +22,14 @@ export async function POST(req: NextRequest) {
     const stripe = new Stripe(stripeSecretKey);
 
     const body = await req.json();
-    const { items } = body;
+    const { items, email } = body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: "Carrinho vazio ou inválido." }, { status: 400 });
     }
 
-    // Validar e formatar items para o Stripe
     const line_items = items.map((item: { id: string; name: string; price: number; quantity: number }) => {
-      if (!item.name || !item.price || !item.quantity) {
+      if (!item.id || !item.name || !item.price || !item.quantity) {
         throw new Error("Item inválido no carrinho.");
       }
       
@@ -45,7 +42,7 @@ export async function POST(req: NextRequest) {
               product_id: item.id
             }
           },
-          unit_amount: Math.round(item.price * 100), // Converter para centavos
+          unit_amount: Math.round(item.price * 100),
         },
         quantity: item.quantity,
       };
@@ -57,8 +54,11 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       success_url: `${req.nextUrl.origin}/checkout?success=1`,
       cancel_url: `${req.nextUrl.origin}/checkout?canceled=1`,
+      customer_email: email, // Pré-preenche o e-mail do cliente
+      billing_address_collection: 'required', // Coleta o endereço de cobrança
       metadata: {
-        order_source: "kowalski_website"
+        order_source: "kowalski_digital_marketplace",
+        product_ids: JSON.stringify(items.map(item => item.id))
       }
     });
 

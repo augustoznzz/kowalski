@@ -6,7 +6,6 @@ import { useCart } from '@/components/CartContext';
 import { products, categories, Product } from '@/data/products';
 
 export default function ShopClient() {
-  // Calcular preços mín/máx dos produtos para os sliders
   const productPrices = products.map(p => p.price);
   const absoluteMinPrice = Math.floor(Math.min(...productPrices));
   const absoluteMaxPrice = Math.ceil(Math.max(...productPrices));
@@ -26,107 +25,107 @@ export default function ShopClient() {
     addToCart({
       id: product.id,
       name: product.name,
-      price: product.price
+      price: product.price,
+      quantity: 1
     });
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-black text-[var(--foreground)] font-sans fade-in">
-      <div className="w-full max-w-7xl px-4 py-8">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans fade-in">
+      <div className="w-full max-w-7xl mx-auto px-4 py-8">
         <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--accent)' }}>
-            Catálogo de Produtos
+          <h1 className="text-4xl font-bold mb-2 text-[var(--foreground)]">
+            Digital Marketplace
           </h1>
-          <p className="text-lg text-neutral-200">Encontre produtos de alta qualidade para todas as necessidades.</p>
+          <p className="text-lg text-gray-600">Ativos de alta qualidade para seus projetos criativos.</p>
         </header>
 
-        {/* Filtros */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-12 bg-black/70 border border-green-900 rounded-xl p-6">
-          <div className="flex-1">
-            <label className="block font-semibold mb-2 text-white">Categoria</label>
-            <select 
-              className="w-full border border-green-900 bg-black text-white rounded-lg px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-          </div>
-          
-          <div className="flex-1">
-            <label className="block font-semibold mb-2 text-white">
-              Faixa de Preço: R$ {minPrice.toFixed(0)} - R$ {maxPrice.toFixed(0)}
-            </label>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm text-neutral-300 mb-1">Preço Mínimo</label>
-                <input
-                  type="range"
-                  min={absoluteMinPrice}
-                  max={absoluteMaxPrice}
-                  value={minPrice}
-                  onChange={(e) => {
-                    const value = Number(e.target.value);
-                    setMinPrice(value);
-                    if (value > maxPrice) setMaxPrice(value);
-                  }}
-                  className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer slider"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-neutral-300 mb-1">Preço Máximo</label>
-                <input
-                  type="range"
-                  min={absoluteMinPrice}
-                  max={absoluteMaxPrice}
-                  value={maxPrice}
-                  onChange={(e) => {
-                    const value = Number(e.target.value);
-                    setMaxPrice(value);
-                    if (value < minPrice) setMinPrice(value);
-                  }}
-                  className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer slider"
-                />
+        {/* Filtros Horizontais */}
+        <div className="bg-[var(--neutral-white)] border border-[var(--neutral-gray)] rounded-xl p-4 mb-12 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            
+            {/* Filtro de Categoria */}
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+              <select 
+                className="w-full border border-[var(--neutral-gray)] bg-white text-gray-800 rounded-lg px-4 py-2 focus:border-[var(--accent)] focus:outline-none transition-colors"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Filtro de Preço */}
+            <div className="flex-1 md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Faixa de Preço: R$ {minPrice.toFixed(0)} - R$ {maxPrice.toFixed(0)}
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Mínimo</label>
+                  <input
+                    type="range"
+                    min={absoluteMinPrice}
+                    max={absoluteMaxPrice}
+                    value={minPrice}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      if (value <= maxPrice) setMinPrice(value);
+                    }}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Máximo</label>
+                  <input
+                    type="range"
+                    min={absoluteMinPrice}
+                    max={absoluteMaxPrice}
+                    value={maxPrice}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      if (value >= minPrice) setMaxPrice(value);
+                    }}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                  />
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="flex items-end">
-            <button
-              onClick={() => {
-                setSelectedCategory("Todos");
-                setMinPrice(absoluteMinPrice);
-                setMaxPrice(absoluteMaxPrice);
-              }}
-              className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg border border-green-900 hover:border-[var(--accent)] transition-colors"
-            >
-              Limpar Filtros
-            </button>
-          </div>
         </div>
+
 
         {/* Lista de Produtos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredProducts.map(product => (
-            <div key={product.id} className="bg-black/70 border border-green-900 rounded-xl p-6 flex flex-col items-center text-center hover:border-[var(--accent)] transition-colors duration-300">
-              <div className="w-32 h-32 bg-[var(--accent)]/10 rounded-lg mb-4 flex items-center justify-center">
-                <Image src={product.image} alt={product.name} width={100} height={100} className="object-contain" />
+            <div key={product.id} className="bg-white border border-[var(--neutral-gray)] rounded-xl overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
+              <div className="w-full h-48 bg-gray-50 flex items-center justify-center p-4 overflow-hidden">
+                <Image src={product.image} alt={product.name} width={80} height={80} className="object-contain group-hover:scale-110 transition-transform duration-300" />
               </div>
-              <h3 className="text-lg font-bold mb-2 text-white text-center">{product.name}</h3>
-              <p className="text-sm text-neutral-300 mb-3 text-center line-clamp-3">{product.description}</p>
-              <div className="text-xl font-bold text-[var(--accent)] mb-4">R$ {product.price.toFixed(2)}</div>
-              <div className="flex flex-col gap-2 w-full">
-                <button 
-                  onClick={() => handleAddToCart(product)}
-                  className="btn-primary w-full py-2 text-sm"
-                >
-                  Adicionar ao Carrinho
-                </button>
-                <Link href={`/product/${product.id}`} className="text-center text-[var(--accent)] hover:underline text-sm">
-                  Ver Detalhes
-                </Link>
+              <div className="p-4 flex flex-col flex-grow">
+                <p className="text-xs text-gray-500 mb-1">{product.category}</p>
+                <h3 className="text-md font-semibold mb-2 text-gray-800 flex-grow">{product.name}</h3>
+                <div className="flex justify-between items-center mb-3">
+                  <div className="text-lg font-bold text-[var(--accent)]">R$ {product.price.toFixed(2)}</div>
+                  <div className={`text-xs font-medium px-2 py-1 rounded-full ${product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {product.stock > 0 ? `${product.stock} em estoque` : 'Esgotado'}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2 w-full mt-auto">
+                  <button 
+                    onClick={() => handleAddToCart(product)}
+                    disabled={product.stock === 0}
+                    className="btn-primary w-full py-2 text-sm disabled:bg-gray-300 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+                  >
+                    {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Esgotado'}
+                  </button>
+                  <Link href={`/product/${product.id}`} className="text-center text-gray-500 hover:text-[var(--accent)] hover:underline text-sm">
+                    Ver Detalhes
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
@@ -134,7 +133,7 @@ export default function ShopClient() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-xl text-neutral-300">Nenhum produto encontrado com os filtros selecionados.</p>
+            <p className="text-xl text-gray-500">Nenhum produto encontrado.</p>
           </div>
         )}
       </div>

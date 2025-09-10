@@ -1,96 +1,114 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { products } from "@/data/products";
+import { products, Product } from "@/data/products";
+import { useCart } from "@/components/CartContext";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const product = products.find((p) => p.id === params.id);
+  const { addToCart } = useCart();
+
   if (!product) return notFound();
 
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1
+    });
+  };
+
+  const relatedProducts = products
+    .filter(p => p.id !== product.id && p.category === product.category)
+    .slice(0, 4);
+
   return (
-    <div className="min-h-screen flex flex-col bg-black text-[var(--foreground)] font-sans">
-      <nav className="w-full flex items-center justify-between px-8 py-6 bg-black/90 backdrop-blur border-b border-green-900">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--accent)' }}>Kowalski</Link>
-        <div className="flex gap-6 items-center">
-          <Link href="/shop" className="hover:text-[var(--accent)] font-medium transition-colors">← Voltar à Loja</Link>
-          <Link href="/about" className="hover:text-[var(--accent)] font-medium transition-colors">Sobre</Link>
-          <Link href="/contact" className="hover:text-[var(--accent)] font-medium transition-colors">Contato</Link>
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans">
+      <main className="flex-1 max-w-6xl mx-auto px-4 py-12">
+        <div className="mb-8">
+          <Link href="/shop" className="text-sm text-gray-500 hover:text-[var(--accent)] transition-colors">
+            &larr; Voltar para a loja
+          </Link>
         </div>
-      </nav>
-      
-      <main className="flex-1 max-w-6xl mx-auto px-4 py-16">
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Imagem do produto */}
-          <div className="flex justify-center">
-            <div className="w-full max-w-md bg-[var(--accent)]/10 rounded-2xl p-8 border border-green-900">
-              <Image 
-                src={product.image} 
-                alt={product.name} 
-                width={400} 
-                height={400} 
-                className="w-full h-auto object-contain"
-              />
-            </div>
+          <div className="flex justify-center items-center bg-gray-50 rounded-2xl p-8 border border-[var(--neutral-gray)]">
+            <Image 
+              src={product.image} 
+              alt={product.name} 
+              width={350} 
+              height={350} 
+              className="w-full h-auto object-contain"
+            />
           </div>
 
           {/* Informações do produto */}
           <div className="space-y-6">
             <div>
-              <span className="inline-block px-3 py-1 bg-[var(--accent)]/20 text-[var(--accent)] rounded-full text-sm font-medium mb-4">
+              <span className="inline-block px-3 py-1 bg-blue-100 text-[var(--accent)] rounded-full text-sm font-medium mb-3">
                 {product.category}
               </span>
-              <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--accent)' }}>
+              <h1 className="text-4xl font-bold mb-4 text-gray-800">
                 {product.name}
               </h1>
-              <p className="text-xl text-neutral-200 mb-6 leading-relaxed">
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 {product.description}
               </p>
             </div>
 
-            <div className="bg-black/70 border border-green-900 rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">Descrição Detalhada</h3>
-              <p className="text-neutral-200 leading-relaxed">
+            <div className="bg-white border border-[var(--neutral-gray)] rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-3 text-gray-800">Descrição Detalhada</h3>
+              <p className="text-gray-600 leading-relaxed">
                 {product.detailedDescription}
               </p>
             </div>
 
-            <div className="flex items-center justify-between bg-gradient-to-r from-[var(--accent)]/10 to-green-800/10 border border-green-700 rounded-xl p-6">
-              <div>
-                <p className="text-sm text-neutral-300 mb-1">Preço</p>
-                <span className="text-3xl font-bold text-[var(--accent)]">
-                  R$ {product.price.toFixed(2)}
-                </span>
+            <div className="bg-white border border-[var(--neutral-gray)] rounded-xl p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">Preço</p>
+                  <span className="text-3xl font-bold text-[var(--accent)]">
+                    R$ {product.price.toFixed(2)}
+                  </span>
+                </div>
+                <div className={`text-sm font-medium px-3 py-1.5 rounded-full ${product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  {product.stock > 0 ? `${product.stock} em estoque` : 'Esgotado'}
+                </div>
               </div>
-              <div className="flex flex-col gap-3">
-                <button className="btn-primary px-8 py-3 text-lg font-bold">
-                  Adicionar ao Carrinho
+              <div className="mt-6 flex flex-col gap-3">
+                <button 
+                  onClick={() => handleAddToCart(product)}
+                  disabled={product.stock === 0}
+                  className="btn-primary w-full py-3 text-base font-bold disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Esgotado'}
                 </button>
-                <Link href="/checkout" className="text-center text-[var(--accent)] hover:underline">
-                  Comprar Agora
-                </Link>
               </div>
             </div>
 
-            {/* Características do produto */}
-            <div className="bg-black/70 border border-green-900 rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">Por que escolher este produto?</h3>
+            {/* Características do produto digital */}
+            <div className="bg-white border border-[var(--neutral-gray)] rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800">O que você recebe</h3>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
-                  <span className="text-[var(--accent)]">✓</span>
-                  <span className="text-neutral-200">Qualidade premium garantida</span>
+                  <span className="text-green-500">✓</span>
+                  <span className="text-gray-600">Download Imediato</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-[var(--accent)]">✓</span>
-                  <span className="text-neutral-200">Design minimalista e funcional</span>
+                  <span className="text-green-500">✓</span>
+                  <span className="text-gray-600">Arquivos em alta resolução</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-[var(--accent)]">✓</span>
-                  <span className="text-neutral-200">Entrega rápida e segura</span>
+                  <span className="text-green-500">✓</span>
+                  <span className="text-gray-600">Licença para uso pessoal e comercial</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-[var(--accent)]">✓</span>
-                  <span className="text-neutral-200">Suporte especializado</span>
+                  <span className="text-green-500">✓</span>
+                  <span className="text-gray-600">Suporte e atualizações futuras</span>
                 </li>
               </ul>
             </div>
@@ -98,28 +116,28 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* Produtos relacionados */}
-        <section className="mt-20">
-          <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: 'var(--accent)' }}>
-            Produtos Relacionados
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products
-              .filter(p => p.id !== product.id && p.category === product.category)
-              .slice(0, 4)
-              .map((relatedProduct) => (
+        {relatedProducts.length > 0 && (
+          <section className="mt-20 pt-12 border-t border-[var(--neutral-gray)]">
+            <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
+              Você também pode gostar
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+              {relatedProducts.map((relatedProduct) => (
                 <Link href={`/product/${relatedProduct.id}`} key={relatedProduct.id}>
-                  <div className="rounded-xl border border-green-900 bg-black/70 shadow-lg p-6 scale-on-hover transition-all duration-300 hover:border-[var(--accent)]">
-                    <div className="w-24 h-24 bg-[var(--accent)]/10 rounded-lg mb-4 mx-auto flex items-center justify-center">
-                      <Image src={relatedProduct.image} alt={relatedProduct.name} width={80} height={80} className="object-contain" />
+                  <div className="bg-white border border-[var(--neutral-gray)] rounded-xl overflow-hidden group hover:shadow-md transition-all duration-300">
+                    <div className="w-full h-40 bg-gray-50 flex items-center justify-center p-4">
+                      <Image src={relatedProduct.image} alt={relatedProduct.name} width={60} height={60} className="object-contain group-hover:scale-110 transition-transform duration-300" />
                     </div>
-                    <h4 className="text-sm font-bold mb-2 text-white text-center">{relatedProduct.name}</h4>
-                    <p className="text-lg font-bold text-[var(--accent)] text-center">R$ {relatedProduct.price.toFixed(2)}</p>
+                    <div className="p-4">
+                      <h4 className="text-sm font-semibold mb-1 text-gray-800 truncate">{relatedProduct.name}</h4>
+                      <p className="text-md font-bold text-[var(--accent)]">R$ {relatedProduct.price.toFixed(2)}</p>
+                    </div>
                   </div>
                 </Link>
-              ))
-            }
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </div>
   );
