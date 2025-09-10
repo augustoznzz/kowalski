@@ -11,24 +11,24 @@ export default function CheckoutClient() {
   return (
     <CartProvider>
       <Navbar />
-      <div className="min-h-screen flex flex-col items-center bg-background text-foreground font-sans fade-in">
+      <div className="min-h-screen flex flex-col items-center bg-black text-[var(--foreground)] font-sans fade-in">
         <header className="w-full flex flex-col items-center py-10">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ color: '#CDFF00' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ color: 'var(--accent)' }}>
             Finalizar Compra
           </h1>
-          <p className="text-lg text-foreground/80 mb-4 max-w-2xl text-center">
+          <p className="text-lg text-neutral-200 mb-4 max-w-2xl text-center">
             Revise seus produtos e escolha a forma de pagamento.
           </p>
         </header>
         <main className="w-full max-w-2xl px-4 py-8 flex flex-col gap-8">
           {/* Resumo do carrinho (placeholder) */}
-          <section className="bg-white rounded-xl shadow p-6 mb-4">
-            <h2 className="text-xl font-semibold mb-4">Seu Carrinho</h2>
+          <section className="bg-neutral-black rounded-xl shadow p-6 mb-4 border border-green-900">
+            <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--accent)' }}>Seu Carrinho</h2>
             <ul className="mb-4">
-              <li className="flex justify-between mb-2"><span>Produto 1</span><span>R$ 199,90</span></li>
-              <li className="flex justify-between mb-2"><span>Produto 2</span><span>R$ 299,90</span></li>
+              <li className="flex justify-between mb-2 text-white"><span>Produto 1</span><span>R$ 199,90</span></li>
+              <li className="flex justify-between mb-2 text-white"><span>Produto 2</span><span>R$ 299,90</span></li>
             </ul>
-            <div className="flex justify-between font-bold text-lg">
+            <div className="flex justify-between font-bold text-lg text-[var(--accent)]">
               <span>Total</span>
               <span>R$ {total.toFixed(2)}</span>
             </div>

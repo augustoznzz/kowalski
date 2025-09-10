@@ -13,14 +13,14 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   if (!product) return notFound();
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-background text-foreground font-sans fade-in">
+    <div className="min-h-screen flex flex-col items-center bg-black text-[var(--foreground)] font-sans fade-in">
       <main className="w-full max-w-2xl px-4 py-16 flex flex-col items-center">
-        <div className="w-48 h-48 bg-neutral-100 rounded-lg mb-6 flex items-center justify-center">
-          <span className="text-6xl text-neutral-400">📦</span>
+        <div className="w-48 h-48 bg-[var(--accent)]/10 rounded-lg mb-6 flex items-center justify-center">
+          <span className="text-6xl text-[var(--accent)]">📦</span>
         </div>
-        <h1 className="text-3xl font-bold mb-2" style={{ color: '#CDFF00' }}>{product.name}</h1>
-        <p className="text-lg text-foreground/80 mb-4 text-center">{product.description}</p>
-        <span className="text-2xl font-semibold mb-6">R$ {product.price.toFixed(2)}</span>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--accent)' }}>{product.name}</h1>
+        <p className="text-lg text-neutral-200 mb-4 text-center">{product.description}</p>
+        <span className="text-2xl font-semibold mb-6 text-white">R$ {product.price.toFixed(2)}</span>
         <button className="btn-primary w-full max-w-xs">Adicionar ao carrinho</button>
       </main>
     </div>

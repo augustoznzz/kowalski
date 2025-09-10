@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 
+/* Paleta: Verde (primário), Preto (primário), Branco (secundário) */
 :root {
-  --background: #fff;
-  --foreground: #171717;
-  --accent: #CDFF00;
-  --accent-hover: #b6e600;
+  --background: #0a0a0a; /* Preto predominante */
+  --foreground: #eaffb7; /* Verde claro para textos principais */
+  --accent: #00ff88;     /* Verde neon para botões/destaques */
+  --accent-hover: #00cc6a; /* Verde escuro para hover */
   --neutral-black: #0a0a0a;
   --neutral-white: #fff;
-  --neutral-gray: #ededed;
+  --neutral-gray: #222; /* Cinza escuro para detalhes */
   --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
 }
@@ -16,9 +17,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
-    --neutral-black: #171717;
-    --neutral-white: #ededed;
+    --foreground: #eaffb7;
+    --neutral-black: #0a0a0a;
+    --neutral-white: #fff;
   }
 }
 
@@ -35,14 +36,17 @@ body {
   color: var(--neutral-black);
   border-radius: 999px;
   padding: 0.75rem 2rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 1.1rem;
   transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
-  box-shadow: 0 2px 12px 0 rgba(205,255,0,0.08);
+  box-shadow: 0 2px 12px 0 rgba(0,255,136,0.10);
 }
 .btn-primary:hover {
   background: var(--accent-hover);
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 4px 24px 0 rgba(205,255,0,0.16);
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 24px 0 rgba(0,255,136,0.18);
 }
 
 /* Animações sutis */
