@@ -59,8 +59,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body 
-        className={`${varelaRound.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground transition-all duration-300 ease-smooth`} 
-        style={{ backgroundColor: '#0a0a0a', color: '#eaffb7' }}
+        className={`${varelaRound.variable} ${geistMono.variable} font-sans antialiased transition-all duration-300 ease-smooth preload`} 
+        style={{ backgroundColor: '#282828', color: '#eaffb7' }}
       >
         <CartProvider>
           <Navbar />
