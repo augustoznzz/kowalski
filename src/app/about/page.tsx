@@ -4,15 +4,6 @@ import Link from "next/link";
 export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-black text-[var(--foreground)] font-sans">
-      <nav className="w-full flex items-center justify-between px-8 py-6 bg-black/90 backdrop-blur border-b border-green-900">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--accent)' }}>Kowalski</Link>
-        <div className="flex gap-6 items-center">
-          <Link href="/shop" className="hover:text-[var(--accent)] font-medium transition-colors">Produtos</Link>
-          <Link href="/about" className="hover:text-[var(--accent)] font-medium transition-colors">Sobre</Link>
-          <Link href="/contact" className="hover:text-[var(--accent)] font-medium transition-colors">Contato</Link>
-        </div>
-      </nav>
-
       <main className="flex-1 max-w-5xl mx-auto px-4 py-16">
         <header className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6" style={{ color: 'var(--accent)' }}>

@@ -1,6 +1,5 @@
-import HomeClient from './HomeClient';
-export const dynamic = "force-dynamic";
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return <HomeClient />;
+  redirect('/about');
 }

@@ -2,19 +2,23 @@
 import React, { useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
-import Navbar from '@/components/Navbar';
-import { CartProvider, useCart } from '@/components/CartContext';
-import { products, categories, priceRanges, Product } from '@/data/products';
+import { useCart } from '@/components/CartContext';
+import { products, categories, Product } from '@/data/products';
 
-function ShopContent() {
+export default function ShopClient() {
+  // Calcular preços mín/máx dos produtos para os sliders
+  const productPrices = products.map(p => p.price);
+  const absoluteMinPrice = Math.floor(Math.min(...productPrices));
+  const absoluteMaxPrice = Math.ceil(Math.max(...productPrices));
+
   const [selectedCategory, setSelectedCategory] = useState("Todos");
-  const [selectedPriceRange, setSelectedPriceRange] = useState(0);
+  const [minPrice, setMinPrice] = useState(absoluteMinPrice);
+  const [maxPrice, setMaxPrice] = useState(absoluteMaxPrice);
   const { addToCart } = useCart();
 
   const filteredProducts = products.filter(product => {
     const categoryMatch = selectedCategory === "Todos" || product.category === selectedCategory;
-    const priceRange = priceRanges[selectedPriceRange];
-    const priceMatch = product.price >= priceRange.min && product.price <= priceRange.max;
+    const priceMatch = product.price >= minPrice && product.price <= maxPrice;
     return categoryMatch && priceMatch;
   });
 
@@ -28,7 +32,6 @@ function ShopContent() {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-black text-[var(--foreground)] font-sans fade-in">
-      <Navbar />
       <div className="w-full max-w-7xl px-4 py-8">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--accent)' }}>
@@ -38,7 +41,7 @@ function ShopContent() {
         </header>
 
         {/* Filtros */}
-        <div className="flex flex-col sm:flex-row gap-6 mb-12 bg-black/70 border border-green-900 rounded-xl p-6">
+        <div className="flex flex-col lg:flex-row gap-6 mb-12 bg-black/70 border border-green-900 rounded-xl p-6">
           <div className="flex-1">
             <label className="block font-semibold mb-2 text-white">Categoria</label>
             <select 
@@ -51,24 +54,63 @@ function ShopContent() {
               ))}
             </select>
           </div>
+          
           <div className="flex-1">
-            <label className="block font-semibold mb-2 text-white">Faixa de Preço</label>
-            <select 
-              className="w-full border border-green-900 bg-black text-white rounded-lg px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
-              value={selectedPriceRange}
-              onChange={(e) => setSelectedPriceRange(Number(e.target.value))}
+            <label className="block font-semibold mb-2 text-white">
+              Faixa de Preço: R$ {minPrice.toFixed(0)} - R$ {maxPrice.toFixed(0)}
+            </label>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-neutral-300 mb-1">Preço Mínimo</label>
+                <input
+                  type="range"
+                  min={absoluteMinPrice}
+                  max={absoluteMaxPrice}
+                  value={minPrice}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setMinPrice(value);
+                    if (value > maxPrice) setMaxPrice(value);
+                  }}
+                  className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer slider"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-neutral-300 mb-1">Preço Máximo</label>
+                <input
+                  type="range"
+                  min={absoluteMinPrice}
+                  max={absoluteMaxPrice}
+                  value={maxPrice}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setMaxPrice(value);
+                    if (value < minPrice) setMinPrice(value);
+                  }}
+                  className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer slider"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-end">
+            <button
+              onClick={() => {
+                setSelectedCategory("Todos");
+                setMinPrice(absoluteMinPrice);
+                setMaxPrice(absoluteMaxPrice);
+              }}
+              className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg border border-green-900 hover:border-[var(--accent)] transition-colors"
             >
-              {priceRanges.map((range, index) => (
-                <option key={index} value={index}>{range.label}</option>
-              ))}
-            </select>
+              Limpar Filtros
+            </button>
           </div>
         </div>
 
-        {/* Grade de produtos */}
+        {/* Lista de Produtos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {filteredProducts.map((product) => (
-            <div key={product.id} className="rounded-2xl border border-green-900 bg-black/70 shadow-xl p-6 flex flex-col items-center scale-on-hover transition-all duration-300 hover:border-[var(--accent)]">
+          {filteredProducts.map(product => (
+            <div key={product.id} className="bg-black/70 border border-green-900 rounded-xl p-6 flex flex-col items-center text-center hover:border-[var(--accent)] transition-colors duration-300">
               <div className="w-32 h-32 bg-[var(--accent)]/10 rounded-lg mb-4 flex items-center justify-center">
                 <Image src={product.image} alt={product.name} width={100} height={100} className="object-contain" />
               </div>
@@ -97,13 +139,5 @@ function ShopContent() {
         )}
       </div>
     </div>
-  );
-}
-
-export default function ShopClient() {
-  return (
-    <CartProvider>
-      <ShopContent />
-    </CartProvider>
   );
 }
