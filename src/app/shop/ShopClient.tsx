@@ -40,31 +40,31 @@ export default function ShopClient() {
         </header>
 
         {/* Filtros Horizontais */}
-        <div className="bg-[var(--neutral-white)] border border-[var(--neutral-gray)] rounded-xl p-4 mb-12 shadow-sm">
+        <div className="bg-[#3f3e3e] border border-lime/20 rounded-xl p-6 mb-12 shadow-lg backdrop-blur-sm">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
             
             {/* Filtro de Categoria */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+              <label className="block text-sm font-medium text-lime mb-2">Categoria</label>
               <select 
-                className="w-full border border-[var(--neutral-gray)] bg-white text-gray-800 rounded-lg px-4 py-2 focus:border-[var(--accent)] focus:outline-none transition-colors"
+                className="w-full border border-lime/30 bg-[#2a2a2a] text-white rounded-lg px-4 py-2 focus:border-lime focus:outline-none transition-all duration-300 hover:bg-[#333333]"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
                 {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
+                  <option key={category} value={category} className="bg-[#2a2a2a] text-white">{category}</option>
                 ))}
               </select>
             </div>
             
             {/* Filtro de Preço */}
             <div className="flex-1 md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-lime mb-2">
                 Faixa de Preço: R$ {minPrice.toFixed(0)} - R$ {maxPrice.toFixed(0)}
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Mínimo</label>
+                  <label className="block text-xs text-neutral-300 mb-1">Mínimo</label>
                   <input
                     type="range"
                     min={absoluteMinPrice}
@@ -74,11 +74,11 @@ export default function ShopClient() {
                       const value = Number(e.target.value);
                       if (value <= maxPrice) setMinPrice(value);
                     }}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    className="w-full h-2 bg-neutral-600 rounded-lg appearance-none cursor-pointer slider"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Máximo</label>
+                  <label className="block text-xs text-neutral-300 mb-1">Máximo</label>
                   <input
                     type="range"
                     min={absoluteMinPrice}
@@ -88,7 +88,7 @@ export default function ShopClient() {
                       const value = Number(e.target.value);
                       if (value >= minPrice) setMaxPrice(value);
                     }}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    className="w-full h-2 bg-neutral-600 rounded-lg appearance-none cursor-pointer slider"
                   />
                 </div>
               </div>
@@ -100,16 +100,16 @@ export default function ShopClient() {
         {/* Lista de Produtos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredProducts.map(product => (
-            <div key={product.id} className="bg-white border border-[var(--neutral-gray)] rounded-xl overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300">
-              <div className="w-full h-48 bg-gray-50 flex items-center justify-center p-4 overflow-hidden">
-                <Image src={product.image} alt={product.name} width={80} height={80} className="object-contain group-hover:scale-110 transition-transform duration-300" />
+            <div key={product.id} className="bg-[#3f3e3e] border border-lime/20 rounded-xl overflow-hidden flex flex-col group hover:shadow-xl hover:shadow-lime/10 hover:-translate-y-2 transition-all duration-500 hover:border-lime/40 transform will-change-transform">
+              <div className="w-full h-48 bg-gradient-to-br from-neutral-700 to-neutral-800 flex items-center justify-center p-4 overflow-hidden">
+                <Image src={product.image} alt={product.name} width={80} height={80} className="object-contain group-hover:scale-110 transition-transform duration-500 animate-float" />
               </div>
               <div className="p-4 flex flex-col flex-grow">
-                <p className="text-xs text-gray-500 mb-1">{product.category}</p>
-                <h3 className="text-md font-semibold mb-2 text-gray-800 flex-grow">{product.name}</h3>
+                <p className="text-xs text-lime/80 mb-1 font-medium">{product.category}</p>
+                <h3 className="text-md font-semibold mb-2 text-white flex-grow group-hover:text-lime transition-colors duration-300">{product.name}</h3>
                 <div className="flex justify-between items-center mb-3">
-                  <div className="text-lg font-bold text-[var(--accent)]">R$ {product.price.toFixed(2)}</div>
-                  <div className={`text-xs font-medium px-2 py-1 rounded-full ${product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  <div className="text-lg font-bold text-lime group-hover:animate-pulse-lime">R$ {product.price.toFixed(2)}</div>
+                  <div className={`text-xs font-medium px-2 py-1 rounded-full ${product.stock > 0 ? 'bg-lime/20 text-lime' : 'bg-red-500/20 text-red-400'}`}>
                     {product.stock > 0 ? `${product.stock} em estoque` : 'Esgotado'}
                   </div>
                 </div>
@@ -117,11 +117,11 @@ export default function ShopClient() {
                   <button 
                     onClick={() => handleAddToCart(product)}
                     disabled={product.stock === 0}
-                    className="btn-primary w-full py-2 text-sm disabled:bg-gray-300 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+                    className="btn-primary w-full py-2 text-sm disabled:bg-neutral-600 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none disabled:text-neutral-400"
                   >
                     {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Esgotado'}
                   </button>
-                  <Link href={`/product/${product.id}`} className="text-center text-gray-500 hover:text-[var(--accent)] hover:underline text-sm">
+                  <Link href={`/product/${product.id}`} className="text-center text-neutral-300 hover:text-lime hover:underline text-sm transition-colors duration-300">
                     Ver Detalhes
                   </Link>
                 </div>
@@ -132,7 +132,7 @@ export default function ShopClient() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-xl text-gray-500">Nenhum produto encontrado.</p>
+            <p className="text-xl text-neutral-300 animate-fade-in">Nenhum produto encontrado.</p>
           </div>
         )}
       </div>
