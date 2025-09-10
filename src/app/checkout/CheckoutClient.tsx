@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCart } from '@/components/CartContext';
-import { FaStripe, FaCreditCard } from 'react-icons/fa';
 
 export default function CheckoutClient() {
   const { items, total, clearCart } = useCart();
@@ -122,11 +121,7 @@ export default function CheckoutClient() {
                   disabled={isLoading || !email}
                   className="w-full btn-primary py-3 text-base font-bold flex items-center justify-center gap-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? 'Processando...' : (
-                    <>
-                      <FaCreditCard /> Pagar com Cartão via Stripe
-                    </>
-                  )}
+                  {isLoading ? 'Processando...' : '💳 Pagar com Cartão via Stripe'}
                 </button>
               </div>
             </section>

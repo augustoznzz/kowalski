@@ -1,62 +1,107 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
+import React from 'react';
 import PurchaseReceiptEmail from '@/emails/PurchaseReceipt';
 import { products } from '@/data/products';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
 export async function POST(req: NextRequest) {
+  // Initialize Stripe with environment variable check
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+  if (!stripeSecretKey) {
+    console.error("STRIPE_SECRET_KEY is not set.");
+    return NextResponse.json({ error: 'Stripe not configured.' }, { status: 500 });
+  }
+  
+  const stripe = new Stripe(stripeSecretKey);
+
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    console.error("STRIPE_WEBHOOK_SECRET is not set.");
+    return NextResponse.json({ error: 'Webhook secret not configured.' }, { status: 500 });
+  }
+
   const signature = req.headers.get('stripe-signature');
   if (!signature) {
-    return new NextResponse('No signature', { status: 400 });
+    return NextResponse.json({ error: 'No Stripe signature found.' }, { status: 400 });
   }
 
   let event: Stripe.Event;
   try {
-    const text = await req.text();
-    event = stripe.webhooks.constructEvent(
-      text,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    const body = await req.text();
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     const error = err as Error;
     console.error(`Webhook signature verification failed: ${error.message}`);
-    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
+    return NextResponse.json({ error: `Webhook Error: ${error.message}` }, { status: 400 });
   }
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
 
     try {
-      const customerEmail = session.customer_details?.email;
-      const productIds = JSON.parse(session.metadata?.product_ids || '[]') as string[];
+      // Initialize Resend only when needed
+      const resendApiKey = process.env.RESEND_API_KEY;
+      if (!resendApiKey) {
+        console.error("RESEND_API_KEY is not set.");
+        return NextResponse.json({ error: 'Email service not configured.' }, { status: 500 });
+      }
       
-      if (!customerEmail || productIds.length === 0) {
-        console.error('Missing customer email or product IDs in session metadata');
-        return new NextResponse('Webhook Error: Missing data', { status: 400 });
+      const resend = new Resend(resendApiKey);
+
+      // Retrieve the session with line items
+      const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+        session.id,
+        { expand: ['line_items.data.price.product'] }
+      );
+
+      const lineItems = sessionWithLineItems.line_items?.data;
+      if (!lineItems) {
+        throw new Error('Could not retrieve line items from session.');
+      }
+      
+      const customerEmail = session.customer_details?.email;
+      if (!customerEmail) {
+        throw new Error('Customer email not found in session.');
       }
 
-      const purchasedProducts = products.filter(p => productIds.includes(p.id));
-      const total = (session.amount_total || 0) / 100;
+      const purchasedProducts = lineItems.map(item => {
+        const product = item.price?.product as Stripe.Product;
+        const localProduct = products.find(p => p.id === product.metadata.product_id);
+        
+        if (!localProduct) {
+          console.warn(`Product with ID ${product.metadata.product_id} not found in local data.`);
+          return null;
+        }
+        
+        return {
+          ...localProduct,
+          downloadUrl: `https://example.com/download/${localProduct.id}/${session.id}`
+        };
+      }).filter(p => p !== null) as (typeof products[0] & { downloadUrl: string })[];
 
-      // Enviar e-mail de confirmação
+      // Send the purchase receipt email using React.createElement
+      const emailElement = React.createElement(PurchaseReceiptEmail, { 
+        products: purchasedProducts, 
+        orderId: session.id 
+      });
+      
+      const emailHtml = await render(emailElement);
+
       await resend.emails.send({
-        from: 'Kowalski <no-reply@yourdomain.com>', // TODO: Configure um domínio verificado no Resend
+        from: 'Kowalski <onboarding@resend.dev>',
         to: customerEmail,
-        subject: 'Sua compra na Kowalski foi confirmada!',
-        react: <PurchaseReceiptEmail products={purchasedProducts} total={total} />,
+        subject: 'Sua compra na Kowalski',
+        html: emailHtml,
       });
 
-      console.log(`Receipt email sent to ${customerEmail}`);
+      console.log(`Purchase receipt sent to ${customerEmail}`);
 
     } catch (error) {
-      console.error('Error processing checkout session:', error);
-      return new NextResponse('Internal Server Error', { status: 500 });
+      console.error("Error processing checkout session:", error);
     }
   }
 
-  return new NextResponse(null, { status: 200 });
+  return NextResponse.json({ received: true });
 }

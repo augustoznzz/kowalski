@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
+import React from 'react';
 import PurchaseReceiptEmail from '@/emails/PurchaseReceipt';
 import { products } from '@/data/products';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
 export async function POST(req: NextRequest) {
+  // Initialize Stripe with environment variable check
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+  if (!stripeSecretKey) {
+    console.error("STRIPE_SECRET_KEY is not set.");
+    return NextResponse.json({ error: 'Stripe not configured.' }, { status: 500 });
+  }
+  
+  const stripe = new Stripe(stripeSecretKey);
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!webhookSecret) {
     console.error("STRIPE_WEBHOOK_SECRET is not set.");
@@ -33,6 +40,15 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
 
     try {
+      // Initialize Resend only when needed
+      const resendApiKey = process.env.RESEND_API_KEY;
+      if (!resendApiKey) {
+        console.error("RESEND_API_KEY is not set.");
+        return NextResponse.json({ error: 'Email service not configured.' }, { status: 500 });
+      }
+      
+      const resend = new Resend(resendApiKey);
+
       // Retrieve the session with line items
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
         session.id,
@@ -54,32 +70,35 @@ export async function POST(req: NextRequest) {
         const localProduct = products.find(p => p.id === product.metadata.product_id);
         
         if (!localProduct) {
-          // This could be a simple log or a more robust error handling
           console.warn(`Product with ID ${product.metadata.product_id} not found in local data.`);
           return null;
         }
         
         return {
           ...localProduct,
-          downloadUrl: `https://example.com/download/${localProduct.id}/${session.id}` // Placeholder URL
+          downloadUrl: `https://example.com/download/${localProduct.id}/${session.id}`
         };
       }).filter(p => p !== null) as (typeof products[0] & { downloadUrl: string })[];
 
+      // Send the purchase receipt email using React.createElement
+      const emailElement = React.createElement(PurchaseReceiptEmail, { 
+        products: purchasedProducts, 
+        orderId: session.id 
+      });
+      
+      const emailHtml = await render(emailElement);
 
-      // Send the purchase receipt email
       await resend.emails.send({
-        from: 'Kowalski <onboarding@resend.dev>', // Replace with your domain
+        from: 'Kowalski <onboarding@resend.dev>',
         to: customerEmail,
         subject: 'Sua compra na Kowalski',
-        react: <PurchaseReceiptEmail products={purchasedProducts} orderId={session.id} />,
+        html: emailHtml,
       });
 
       console.log(`Purchase receipt sent to ${customerEmail}`);
 
     } catch (error) {
       console.error("Error processing checkout session:", error);
-      // Do not return a 500 to Stripe, as it might retry unnecessarily for some errors.
-      // Log the error for monitoring.
     }
   }
 

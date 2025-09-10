@@ -25,8 +25,7 @@ export default function ShopClient() {
     addToCart({
       id: product.id,
       name: product.name,
-      price: product.price,
-      quantity: 1
+      price: product.price
     });
   };
 

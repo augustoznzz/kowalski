@@ -7,7 +7,8 @@ export interface Product {
   detailedDescription: string;
   image: string;
   featured: boolean;
-  stock: number; // Adicionado estoque
+  stock: number;
+  downloadUrl?: string;
 }
 
 export const products: Product[] = [
