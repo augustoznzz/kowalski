@@ -21,22 +21,39 @@ export default function HeroNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useTranslation();
 
-  const menuItems = [
-    { key: "about", label: t('about'), href: "/about" },
-    { key: "products", label: t('products'), href: "/shop" },
-    { key: "contact", label: t('contact'), href: "/contact" },
-    { key: "cart", label: t('cart'), href: "/checkout" },
-  ];
-
   return (
     <nav className="w-full bg-black/90 backdrop-blur-md border-b border-lime-400/20 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Desktop Menu - Hidden on mobile */}
+          {/* Logo - Always visible */}
+          <div className="flex items-center space-x-2">
+            <Link href="/">
+              <div className="flex items-center space-x-2">
+                <KowalskiLogo />
+                <span className="font-bold text-lime-400 text-xl">Kowalski</span>
+              </div>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation - Centered */}
           <div className="hidden sm:flex items-center space-x-8">
-            <Link href="/" className="flex items-center space-x-2">
-              <KowalskiLogo />
-              <span className="font-bold text-lime-400 text-xl">Kowalski</span>
+            <Link
+              href="/about"
+              className="text-white hover:text-lime-400 transition-colors duration-200 font-medium"
+            >
+              {t('about')}
+            </Link>
+            <Link
+              href="/shop"
+              className="text-white hover:text-lime-400 transition-colors duration-200 font-medium"
+            >
+              {t('products')}
+            </Link>
+            <Link
+              href="/contact"
+              className="text-white hover:text-lime-400 transition-colors duration-200 font-medium"
+            >
+              {t('contact')}
             </Link>
           </div>
 
@@ -44,7 +61,7 @@ export default function HeroNavbar() {
           <div className="sm:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-lime-400 hover:text-lime-300 focus:outline-none focus:text-lime-300"
+              className="text-lime-400 hover:text-lime-300 focus:outline-none focus:text-lime-300 mr-4"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,28 +74,7 @@ export default function HeroNavbar() {
             </button>
           </div>
 
-          {/* Mobile Brand - Centered on mobile */}
-          <div className="sm:hidden absolute left-1/2 transform -translate-x-1/2">
-            <Link href="/" className="flex items-center space-x-2">
-              <KowalskiLogo />
-              <span className="font-bold text-lime-400 text-xl">Kowalski</span>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden sm:flex items-center space-x-8">
-            {menuItems.slice(0, 3).map((item) => (
-              <Link
-                key={item.key}
-                href={item.href}
-                className="text-white hover:text-lime-400 transition-colors duration-200 font-medium"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Cart Button - Always visible */}
+          {/* Cart Button - Always visible on the right */}
           <div className="flex items-center">
             <Link
               href="/checkout"
@@ -94,16 +90,27 @@ export default function HeroNavbar() {
         {isMenuOpen && (
           <div className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-black/95 rounded-lg mt-2">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className="block px-3 py-2 text-white hover:text-lime-400 transition-colors duration-200 font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <Link
+                href="/about"
+                className="block px-3 py-2 text-white hover:text-lime-400 transition-colors duration-200 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('about')}
+              </Link>
+              <Link
+                href="/shop"
+                className="block px-3 py-2 text-white hover:text-lime-400 transition-colors duration-200 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('products')}
+              </Link>
+              <Link
+                href="/contact"
+                className="block px-3 py-2 text-white hover:text-lime-400 transition-colors duration-200 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('contact')}
+              </Link>
             </div>
           </div>
         )}

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useCart } from '@/components/CartContext';
 import { useTranslation } from '@/components/LanguageToggle';
 import { products, categories, Product } from '@/data/products';
-import Navbar from '@/components/Navbar';
 
 export default function ShopClient() {
   const { t } = useTranslation();
@@ -34,7 +33,6 @@ export default function ShopClient() {
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans fade-in">
-      <Navbar />
       <div className="w-full max-w-7xl mx-auto px-4 py-8">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-2 text-[var(--foreground)]">

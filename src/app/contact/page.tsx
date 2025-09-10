@@ -1,25 +1,19 @@
+"use client";
 import React from "react";
-import Link from "next/link";
+import { useTranslation } from "@/components/LanguageToggle";
 
 export default function ContactPage() {
+  const { t } = useTranslation();
+  
   return (
     <div className="min-h-screen flex flex-col bg-black text-[var(--foreground)] font-sans">
-      <nav className="w-full flex items-center justify-between px-8 py-6 bg-black/90 backdrop-blur border-b border-green-900">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--accent)' }}>Kowalski</Link>
-        <div className="flex gap-6 items-center">
-          <Link href="/shop" className="hover:text-[var(--accent)] font-medium transition-colors">Produtos</Link>
-          <Link href="/about" className="hover:text-[var(--accent)] font-medium transition-colors">Sobre</Link>
-          <Link href="/contact" className="hover:text-[var(--accent)] font-medium transition-colors">Contato</Link>
-        </div>
-      </nav>
-
       <main className="flex-1 max-w-4xl mx-auto px-4 py-16">
         <header className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6" style={{ color: 'var(--accent)' }}>
-            Contato & Suporte
+            {t('contactTitle')}
           </h1>
           <p className="text-xl text-neutral-200 max-w-3xl mx-auto">
-            Precisa de ajuda? Nossa equipe está pronta para atendê-lo da melhor forma possível.
+            {t('contactSubtitle')}
           </p>
         </header>
 
@@ -27,53 +21,53 @@ export default function ContactPage() {
           {/* Formulário de contato */}
           <div>
             <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--accent)' }}>
-              Envie sua Mensagem
+              {t('sendMessage')}
             </h2>
             <form className="space-y-6 bg-black/70 border border-green-900 rounded-xl p-8">
               <div>
-                <label className="block font-semibold mb-2 text-white">Nome Completo</label>
+                <label className="block font-semibold mb-2 text-white">{t('fullName')}</label>
                 <input 
                   type="text" 
                   className="w-full border border-green-900 bg-black text-white rounded-lg px-4 py-3 focus:border-[var(--accent)] focus:outline-none transition-colors" 
-                  placeholder="Seu nome completo"
+                  placeholder={t('fullNamePlaceholder')}
                   required 
                 />
               </div>
               
               <div>
-                <label className="block font-semibold mb-2 text-white">E-mail</label>
+                <label className="block font-semibold mb-2 text-white">{t('email')}</label>
                 <input 
                   type="email" 
                   className="w-full border border-green-900 bg-black text-white rounded-lg px-4 py-3 focus:border-[var(--accent)] focus:outline-none transition-colors" 
-                  placeholder="seu@email.com"
+                  placeholder={t('emailPlaceholder')}
                   required 
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-2 text-white">Assunto</label>
+                <label className="block font-semibold mb-2 text-white">{t('subject')}</label>
                 <select className="w-full border border-green-900 bg-black text-white rounded-lg px-4 py-3 focus:border-[var(--accent)] focus:outline-none transition-colors">
-                  <option>Dúvida sobre produto</option>
-                  <option>Problema com pedido</option>
-                  <option>Sugestão</option>
-                  <option>Reclamação</option>
-                  <option>Elogio</option>
-                  <option>Outro</option>
+                  <option>{t('productQuestion')}</option>
+                  <option>{t('orderProblem')}</option>
+                  <option>{t('suggestion')}</option>
+                  <option>{t('complaint')}</option>
+                  <option>{t('compliment')}</option>
+                  <option>{t('other')}</option>
                 </select>
               </div>
               
               <div>
-                <label className="block font-semibold mb-2 text-white">Mensagem</label>
+                <label className="block font-semibold mb-2 text-white">{t('message')}</label>
                 <textarea 
                   className="w-full border border-green-900 bg-black text-white rounded-lg px-4 py-3 focus:border-[var(--accent)] focus:outline-none transition-colors" 
                   rows={6}
-                  placeholder="Descreva sua dúvida ou mensagem..."
+                  placeholder={t('messagePlaceholder')}
                   required 
                 />
               </div>
               
               <button type="submit" className="btn-primary w-full py-3 text-lg font-semibold">
-                Enviar Mensagem
+                {t('sendMessageBtn')}
               </button>
             </form>
           </div>
@@ -82,37 +76,37 @@ export default function ContactPage() {
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--accent)' }}>
-                Outras Formas de Contato
+                {t('otherContact')}
               </h2>
               
               <div className="space-y-6">
                 <div className="bg-black/70 border border-green-900 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-3 text-[var(--accent)]">📧 E-mail</h3>
-                  <p className="text-neutral-200 mb-2">Para dúvidas gerais:</p>
+                  <h3 className="text-lg font-semibold mb-3 text-[var(--accent)]">📧 {t('email')}</h3>
+                  <p className="text-neutral-200 mb-2">{t('generalQuestions')}</p>
                   <a href="mailto:contato@kowalski.com" className="text-[var(--accent)] hover:underline font-medium">
                     contato@kowalski.com
                   </a>
-                  <p className="text-neutral-200 mb-2 mt-4">Para suporte técnico:</p>
+                  <p className="text-neutral-200 mb-2 mt-4">{t('technicalSupportEmail')}</p>
                   <a href="mailto:suporte@kowalski.com" className="text-[var(--accent)] hover:underline font-medium">
                     suporte@kowalski.com
                   </a>
                 </div>
 
                 <div className="bg-black/70 border border-green-900 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-3 text-[var(--accent)]">⏰ Horário de Atendimento</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-[var(--accent)]">⏰ {t('businessHours')}</h3>
                   <div className="text-neutral-200 space-y-1">
-                    <p>Segunda a Sexta: 9h às 18h</p>
-                    <p>Sábado: 9h às 14h</p>
-                    <p>Domingo: Fechado</p>
+                    <p>{t('mondayFriday')}</p>
+                    <p>{t('saturday')}</p>
+                    <p>{t('sunday')}</p>
                   </div>
                 </div>
 
                 <div className="bg-black/70 border border-green-900 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-3 text-[var(--accent)]">⚡ Tempo de Resposta</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-[var(--accent)]">⚡ {t('responseTime')}</h3>
                   <div className="text-neutral-200 space-y-1">
-                    <p>E-mail: até 24 horas</p>
-                    <p>Formulário: até 12 horas</p>
-                    <p>Urgente: até 4 horas</p>
+                    <p>{t('emailResponse')}</p>
+                    <p>{t('formResponse')}</p>
+                    <p>{t('urgentResponse')}</p>
                   </div>
                 </div>
               </div>
@@ -121,7 +115,7 @@ export default function ContactPage() {
             {/* Redes sociais */}
             <div>
               <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--accent)' }}>
-                Siga-nos nas Redes Sociais
+                {t('followSocial')}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <a 
@@ -161,19 +155,19 @@ export default function ContactPage() {
 
             {/* FAQ rápido */}
             <div className="bg-gradient-to-r from-[var(--accent)]/10 to-green-800/10 border border-green-700 rounded-xl p-6">
-              <h3 className="text-xl font-bold mb-4 text-[var(--accent)]">Perguntas Frequentes</h3>
+              <h3 className="text-xl font-bold mb-4 text-[var(--accent)]">{t('faq')}</h3>
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="font-medium text-white">Como rastrear meu pedido?</p>
-                  <p className="text-neutral-300">Enviamos o código de rastreamento por e-mail após o envio.</p>
+                  <p className="font-medium text-white">{t('trackOrder')}</p>
+                  <p className="text-neutral-300">{t('trackOrderAnswer')}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-white">Qual o prazo de entrega?</p>
-                  <p className="text-neutral-300">De 3 a 7 dias úteis para todo o Brasil.</p>
+                  <p className="font-medium text-white">{t('deliveryTime')}</p>
+                  <p className="text-neutral-300">{t('deliveryTimeAnswer')}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-white">Posso trocar um produto?</p>
-                  <p className="text-neutral-300">Sim, até 30 dias após o recebimento.</p>
+                  <p className="font-medium text-white">{t('canExchange')}</p>
+                  <p className="text-neutral-300">{t('canExchangeAnswer')}</p>
                 </div>
               </div>
             </div>

@@ -51,7 +51,7 @@ const translations: Translations = {
   
   // Footer
   allRightsReserved: { 'pt-BR': 'Todos os direitos reservados', 'en-US': 'All rights reserved' },
-  ecommerceDescription: { 'pt-BR': 'E-commerce de qualidade premium com design minimalista', 'en-US': 'Premium quality e-commerce with minimalist design' },
+  ecommerceDescription: { 'pt-BR': '', 'en-US': 'Premium quality e-commerce with minimalist design' },
   
   // Product actions
   addToCart: { 'pt-BR': 'Adicionar ao Carrinho', 'en-US': 'Add to Cart' },
@@ -100,6 +100,92 @@ const translations: Translations = {
   // Language names
   portuguese: { 'pt-BR': 'Português', 'en-US': 'Portuguese' },
   english: { 'pt-BR': 'Inglês', 'en-US': 'English' },
+  
+  // About page translations
+  aboutTitle: { 'pt-BR': 'Sobre a Kowalski', 'en-US': 'About Kowalski' },
+  aboutSubtitle: { 
+    'pt-BR': 'A Kowalski nasceu com a missão de redefinir a experiência de compra online, oferecendo produtos de alta qualidade com design minimalista e funcionalidade excepcional.',
+    'en-US': 'Kowalski was born with the mission to redefine the online shopping experience, offering high-quality products with minimalist design and exceptional functionality.'
+  },
+  ourStory: { 'pt-BR': 'Nossa História', 'en-US': 'Our Story' },
+  storyText1: {
+    'pt-BR': 'Fundada em 2025, a Kowalski surgiu da paixão por inovação e simplicidade. Nossa jornada começou com uma pergunta simples: como podemos tornar produtos essenciais ainda mais extraordinários?',
+    'en-US': 'Founded in 2025, Kowalski emerged from a passion for innovation and simplicity. Our journey began with a simple question: how can we make essential products even more extraordinary?'
+  },
+  storyText2: {
+    'pt-BR': 'Acreditamos que o design minimalista não significa apenas aparência clean, mas sim funcionalidade inteligente que simplifica a vida das pessoas. Cada produto em nosso catálogo é cuidadosamente selecionado e testado para garantir que atenda aos mais altos padrões de qualidade.',
+    'en-US': 'We believe that minimalist design means not just clean appearance, but intelligent functionality that simplifies people\'s lives. Each product in our catalog is carefully selected and tested to ensure it meets the highest quality standards.'
+  },
+  storyText3: {
+    'pt-BR': 'Desde o início, nosso compromisso tem sido criar uma experiência de compra transparente, segura e satisfatória para todos os nossos clientes.',
+    'en-US': 'From the beginning, our commitment has been to create a transparent, secure and satisfying shopping experience for all our customers.'
+  },
+  constantInnovation: { 'pt-BR': 'Inovação Constante', 'en-US': 'Constant Innovation' },
+  innovationDesc: {
+    'pt-BR': 'Sempre em busca de soluções que fazem a diferença no dia a dia dos nossos clientes.',
+    'en-US': 'Always looking for solutions that make a difference in our customers\' daily lives.'
+  },
+  missionValues: { 'pt-BR': 'Missão & Valores', 'en-US': 'Mission & Values' },
+  quality: { 'pt-BR': 'Qualidade', 'en-US': 'Quality' },
+  qualityDesc: { 'pt-BR': 'Produtos premium selecionados com rigorosos padrões de qualidade.', 'en-US': 'Premium products selected with rigorous quality standards.' },
+  simplicity: { 'pt-BR': 'Simplicidade', 'en-US': 'Simplicity' },
+  simplicityDesc: { 'pt-BR': 'Design minimalista que foca no essencial e na funcionalidade.', 'en-US': 'Minimalist design that focuses on the essential and functionality.' },
+  transparency: { 'pt-BR': 'Transparência', 'en-US': 'Transparency' },
+  transparencyDesc: { 'pt-BR': 'Atendimento honesto e comunicação clara em todos os processos.', 'en-US': 'Honest service and clear communication in all processes.' },
+  sustainability: { 'pt-BR': 'Sustentabilidade', 'en-US': 'Sustainability' },
+  sustainabilityDesc: { 'pt-BR': 'Compromisso com práticas responsáveis e sustentáveis.', 'en-US': 'Commitment to responsible and sustainable practices.' },
+  qualityCommitment: { 'pt-BR': 'Nosso Compromisso com a Qualidade', 'en-US': 'Our Commitment to Quality' },
+  qualityCommitmentDesc: {
+    'pt-BR': 'Na Kowalski, qualidade não é apenas uma palavra - é nossa filosofia central. Cada produto passa por rigorosos testes de qualidade e durabilidade antes de chegar até você.',
+    'en-US': 'At Kowalski, quality is not just a word - it\'s our core philosophy. Each product undergoes rigorous quality and durability testing before reaching you.'
+  },
+  satisfactionGuaranteed: { 'pt-BR': 'Satisfação Garantida', 'en-US': 'Satisfaction Guaranteed' },
+  technicalSupport: { 'pt-BR': 'Suporte Técnico', 'en-US': 'Technical Support' },
+  averageRating: { 'pt-BR': 'Avaliação Média', 'en-US': 'Average Rating' },
+  readyToKnow: { 'pt-BR': 'Pronto para Conhecer Nossos Produtos?', 'en-US': 'Ready to Know Our Products?' },
+  qualityDesignDesc: {
+    'pt-BR': 'Descubra como a qualidade e o design podem transformar sua experiência de compra.',
+    'en-US': 'Discover how quality and design can transform your shopping experience.'
+  },
+  exploreCatalog: { 'pt-BR': 'Explorar Catálogo', 'en-US': 'Explore Catalog' },
+  
+  // Contact page translations
+  contactTitle: { 'pt-BR': 'Contato & Suporte', 'en-US': 'Contact & Support' },
+  contactSubtitle: { 'pt-BR': 'Precisa de ajuda? Nossa equipe está pronta para atendê-lo da melhor forma possível.', 'en-US': 'Need help? Our team is ready to serve you in the best possible way.' },
+  sendMessage: { 'pt-BR': 'Envie sua Mensagem', 'en-US': 'Send Your Message' },
+  fullName: { 'pt-BR': 'Nome Completo', 'en-US': 'Full Name' },
+  fullNamePlaceholder: { 'pt-BR': 'Seu nome completo', 'en-US': 'Your full name' },
+  email: { 'pt-BR': 'E-mail', 'en-US': 'Email' },
+  emailPlaceholder: { 'pt-BR': 'seu@email.com', 'en-US': 'your@email.com' },
+  subject: { 'pt-BR': 'Assunto', 'en-US': 'Subject' },
+  productQuestion: { 'pt-BR': 'Dúvida sobre produto', 'en-US': 'Product question' },
+  orderProblem: { 'pt-BR': 'Problema com pedido', 'en-US': 'Order problem' },
+  suggestion: { 'pt-BR': 'Sugestão', 'en-US': 'Suggestion' },
+  complaint: { 'pt-BR': 'Reclamação', 'en-US': 'Complaint' },
+  compliment: { 'pt-BR': 'Elogio', 'en-US': 'Compliment' },
+  other: { 'pt-BR': 'Outro', 'en-US': 'Other' },
+  message: { 'pt-BR': 'Mensagem', 'en-US': 'Message' },
+  messagePlaceholder: { 'pt-BR': 'Descreva sua dúvida ou mensagem...', 'en-US': 'Describe your question or message...' },
+  sendMessageBtn: { 'pt-BR': 'Enviar Mensagem', 'en-US': 'Send Message' },
+  otherContact: { 'pt-BR': 'Outras Formas de Contato', 'en-US': 'Other Ways to Contact' },
+  generalQuestions: { 'pt-BR': 'Para dúvidas gerais:', 'en-US': 'For general questions:' },
+  technicalSupportEmail: { 'pt-BR': 'Para suporte técnico:', 'en-US': 'For technical support:' },
+  businessHours: { 'pt-BR': 'Horário de Atendimento', 'en-US': 'Business Hours' },
+  mondayFriday: { 'pt-BR': 'Segunda a Sexta: 9h às 18h', 'en-US': 'Monday to Friday: 9am to 6pm' },
+  saturday: { 'pt-BR': 'Sábado: 9h às 14h', 'en-US': 'Saturday: 9am to 2pm' },
+  sunday: { 'pt-BR': 'Domingo: Fechado', 'en-US': 'Sunday: Closed' },
+  responseTime: { 'pt-BR': 'Tempo de Resposta', 'en-US': 'Response Time' },
+  emailResponse: { 'pt-BR': 'E-mail: até 24 horas', 'en-US': 'Email: up to 24 hours' },
+  formResponse: { 'pt-BR': 'Formulário: até 12 horas', 'en-US': 'Form: up to 12 hours' },
+  urgentResponse: { 'pt-BR': 'Urgente: até 4 horas', 'en-US': 'Urgent: up to 4 hours' },
+  followSocial: { 'pt-BR': 'Siga-nos nas Redes Sociais', 'en-US': 'Follow Us on Social Media' },
+  faq: { 'pt-BR': 'Perguntas Frequentes', 'en-US': 'Frequently Asked Questions' },
+  trackOrder: { 'pt-BR': 'Como rastrear meu pedido?', 'en-US': 'How to track my order?' },
+  trackOrderAnswer: { 'pt-BR': 'Enviamos o código de rastreamento por e-mail após o envio.', 'en-US': 'We send the tracking code by email after shipping.' },
+  deliveryTime: { 'pt-BR': 'Qual o prazo de entrega?', 'en-US': 'What is the delivery time?' },
+  deliveryTimeAnswer: { 'pt-BR': 'De 3 a 7 dias úteis para todo o Brasil.', 'en-US': '3 to 7 business days throughout Brazil.' },
+  canExchange: { 'pt-BR': 'Posso trocar um produto?', 'en-US': 'Can I exchange a product?' },
+  canExchangeAnswer: { 'pt-BR': 'Sim, até 30 dias após o recebimento.', 'en-US': 'Yes, up to 30 days after receipt.' },
 };
 
 export default function LanguageToggle() {
