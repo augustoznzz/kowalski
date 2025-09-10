@@ -3,61 +3,59 @@ import { Html, Head, Preview, Body, Container, Section, Heading, Text, Img, Link
 import { Product } from '@/data/products';
 
 interface PurchaseReceiptEmailProps {
-  products: Product[];
-  total: number;
+  products: (Product & { downloadUrl: string })[];
+  orderId: string;
 }
 
-const PurchaseReceiptEmail: React.FC<PurchaseReceiptEmailProps> = ({ products, total }) => {
+const PurchaseReceiptEmail: React.FC<PurchaseReceiptEmailProps> = ({ products, orderId }) => {
+  const total = products.reduce((sum, p) => sum + p.price, 0);
+
   return (
     <Html>
       <Head />
-      <Preview>Obrigado pela sua compra na Kowalski!</Preview>
+      <Preview>Recibo e downloads do seu pedido #{orderId}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
             <Heading style={heading}>Kowalski</Heading>
           </Section>
           <Section style={content}>
-            <Heading as="h2" style={subheading}>Obrigado pela sua compra!</Heading>
-            <Text style={paragraph}>
-              Olá,
-            </Text>
-            <Text style={paragraph}>
-              Seu pedido foi processado com sucesso. Você pode baixar seus produtos digitais usando os links abaixo.
-            </Text>
+            <Heading as="h2" style={subheading}>Obrigado pela sua compra! 🎉</Heading>
+            <Text style={paragraph}>Olá,</Text>
+            <Text style={paragraph}>Seu pedido foi processado com sucesso. Abaixo estão os links para download imediato dos seus arquivos digitais.</Text>
+            <Text style={paragraph}><strong>ID do Pedido:</strong> {orderId}</Text>
 
             <Hr style={hr} />
 
             {products.map((product) => (
               <Section key={product.id} style={productSection}>
-                <Img src={`https://raw.githubusercontent.com/augustoznzz/kowalski/main/public${product.image}`} alt={product.name} width="80" height="80" style={productImage} />
+                <Img
+                  src={`https://raw.githubusercontent.com/augustoznzz/kowalski/main/public${product.image}`}
+                  alt={product.name}
+                  width="72"
+                  height="72"
+                  style={productImage}
+                />
                 <div style={productDetails}>
                   <Text style={productName}>{product.name}</Text>
                   <Text style={productDescription}>{product.description}</Text>
-                  <Link href={`#`} style={downloadLink}>
-                    Baixar {product.name}
-                  </Link>
+                  <Link href={product.downloadUrl} style={downloadLink}>Baixar Agora</Link>
                 </div>
+                <div style={priceWrapper}><Text style={price}>R$ {product.price.toFixed(2)}</Text></div>
               </Section>
             ))}
 
             <Hr style={hr} />
 
             <Section style={totalSection}>
-              <Text style={totalText}>Total: R$ {total.toFixed(2)}</Text>
+              <Text style={totalText}>Total Pago: R$ {total.toFixed(2)}</Text>
             </Section>
 
-            <Text style={paragraph}>
-              Se você tiver alguma dúvida, responda a este e-mail. Estamos aqui para ajudar!
-            </Text>
-            <Text style={paragraph}>
-              — A equipe Kowalski
-            </Text>
+            <Text style={paragraph}>Se você tiver dúvidas ou não conseguir acessar os arquivos, basta responder este e-mail.</Text>
+            <Text style={paragraph}>— Equipe Kowalski</Text>
           </Section>
           <Section style={footer}>
-            <Text style={footerText}>
-              © {new Date().getFullYear()} Kowalski. Todos os direitos reservados.
-            </Text>
+            <Text style={footerText}>© {new Date().getFullYear()} Kowalski. Todos os direitos reservados.</Text>
           </Section>
         </Container>
       </Body>
@@ -116,13 +114,15 @@ const hr = {
 
 const productSection = {
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   padding: '16px 0',
+  borderBottom: '1px solid #eef1f4'
 };
 
 const productImage = {
   borderRadius: '8px',
   marginRight: '20px',
+  backgroundColor: '#f1f3f5'
 };
 
 const productDetails = {
@@ -143,9 +143,14 @@ const productDescription = {
 };
 
 const downloadLink = {
-  fontSize: '14px',
-  color: '#007bff',
-  textDecoration: 'underline',
+  fontSize: '13px',
+  backgroundColor: '#007bff',
+  color: '#ffffff',
+  textDecoration: 'none',
+  padding: '6px 12px',
+  borderRadius: '4px',
+  display: 'inline-block',
+  marginTop: '4px'
 };
 
 const totalSection = {
@@ -156,8 +161,11 @@ const totalSection = {
 const totalText = {
   fontSize: '18px',
   fontWeight: 'bold',
-  color: '#212529',
+  color: '#212529'
 };
+
+const priceWrapper = { minWidth: '90px', textAlign: 'right' as const };
+const price = { fontSize: '14px', fontWeight: 600, color: '#212529', marginTop: '6px' };
 
 const footer = {
   padding: '20px 0',
