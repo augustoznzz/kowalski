@@ -13,10 +13,11 @@
   directory = ".netlify/functions"
 
 # Environment variables para produção
+# IMPORTANTE: Configure essas variáveis no painel do Netlify, NÃO neste arquivo!
 [context.production.environment]
-  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_live_51PcM6UFuXE24kn9Z7LlT1OFU8VYq6tlC9xr7gvBBghNIU2tBDvmXoGhw6CyBbd6pNNxX1tukbitK8ze73zphX5NU00gzrEepVS"
-  STRIPE_SECRET_KEY = "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"
-  NEXT_PUBLIC_RAMP_API_KEY = "YOUR_RAMP_API_KEY"
+  # NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "Configure no Netlify Dashboard"
+  # STRIPE_SECRET_KEY = "Configure no Netlify Dashboard"
+  # NEXT_PUBLIC_RAMP_API_KEY = "Configure no Netlify Dashboard"
 
 # Redirects para SPA behavior
 [[redirects]]

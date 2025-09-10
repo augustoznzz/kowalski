@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check-security": "node scripts/check-security.js",
+    "prebuild": "npm run check-security"
   },
   "dependencies": {
     "next": "15.5.2",

@@ -3,8 +3,21 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    
+    // Validações de segurança
     if (!stripeSecretKey) {
-      return NextResponse.json({ error: "Stripe API key not configured." }, { status: 500 });
+      console.error("STRIPE_SECRET_KEY not configured");
+      return NextResponse.json({ error: "Payment system not configured." }, { status: 500 });
+    }
+
+    if (!stripeSecretKey.startsWith('sk_')) {
+      console.error("Invalid Stripe secret key format");
+      return NextResponse.json({ error: "Invalid payment configuration." }, { status: 500 });
+    }
+
+    // Warning para chaves de teste em produção
+    if (process.env.NODE_ENV === 'production' && stripeSecretKey.startsWith('sk_test_')) {
+      console.warn("WARNING: Using test keys in production environment!");
     }
 
     const { default: Stripe } = await import("stripe");
