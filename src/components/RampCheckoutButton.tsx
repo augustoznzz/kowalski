@@ -1,20 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { useTranslations } from 'next-intl';
 
 export default function RampCheckoutButton({ amount }: { amount: number }) {
   const [open, setOpen] = useState(false);
   const apiKey = process.env.NEXT_PUBLIC_RAMP_API_KEY || "YOUR_RAMP_API_KEY";
-  const t = useTranslations();
 
   return (
     <>
       <button
-        className="btn-primary w-full"
+        className="btn-primary w-full py-3 text-lg font-semibold"
         style={{ background: '#fff', color: '#222', border: '2px solid #CDFF00' }}
         onClick={() => setOpen(true)}
       >
-        {t('checkout.pay.ramp')}
+        💰 Pagar via Ramp
       </button>
       {open && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
