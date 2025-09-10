@@ -5,8 +5,10 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/components/CartContext";
+import { useTranslation } from "@/components/LanguageToggle";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
+  const { t } = useTranslation();
   const product = products.find((p) => p.id === params.id);
   const { addToCart } = useCart();
 
@@ -29,7 +31,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       <main className="flex-1 max-w-6xl mx-auto px-4 py-12">
         <div className="mb-8">
           <Link href="/shop" className="text-sm text-neutral-300 hover:text-lime transition-colors duration-300 animate-fade-in">
-            &larr; Voltar para a loja
+            ← {t('backToShop')}
           </Link>
         </div>
 
@@ -60,7 +62,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             </div>
 
             <div className="bg-[#3f3e3e] border border-lime/20 rounded-xl p-6 hover:border-lime/40 transition-all duration-500">
-              <h3 className="text-lg font-semibold mb-3 text-white">Descrição Detalhada</h3>
+              <h3 className="text-lg font-semibold mb-3 text-white">{t('detailedDescription')}</h3>
               <p className="text-neutral-300 leading-relaxed">
                 {product.detailedDescription}
               </p>
@@ -69,13 +71,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="bg-[#3f3e3e] border border-lime/20 rounded-xl p-6 hover:border-lime/40 transition-all duration-500">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-neutral-400 mb-1">Preço</p>
+                  <p className="text-sm text-neutral-400 mb-1">{t('price')}</p>
                   <span className="text-3xl font-bold text-lime animate-pulse-lime">
                     R$ {product.price.toFixed(2)}
                   </span>
                 </div>
                 <div className={`text-sm font-medium px-3 py-1.5 rounded-full ${product.stock > 0 ? 'bg-lime/20 text-lime' : 'bg-red-500/20 text-red-400'}`}>
-                  {product.stock > 0 ? `${product.stock} em estoque` : 'Esgotado'}
+                  {product.stock > 0 ? `${product.stock} ${t('inStock')}` : t('outOfStock')}
                 </div>
               </div>
               <div className="mt-6 flex flex-col gap-3">
@@ -84,30 +86,30 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   disabled={product.stock === 0}
                   className="btn-primary w-full py-3 text-base font-bold disabled:bg-neutral-600 disabled:cursor-not-allowed disabled:text-neutral-400"
                 >
-                  {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Esgotado'}
+                  {product.stock > 0 ? t('addToCart') : t('outOfStock')}
                 </button>
               </div>
             </div>
 
             {/* Características do produto digital */}
             <div className="bg-[#3f3e3e] border border-lime/20 rounded-xl p-6 hover:border-lime/40 transition-all duration-500">
-              <h3 className="text-lg font-semibold mb-4 text-white">O que você recebe</h3>
+              <h3 className="text-lg font-semibold mb-4 text-white">{t('whatYouGet')}</h3>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">Download Imediato</span>
+                  <span className="text-neutral-300">{t('immediateDownload')}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">Arquivos em alta resolução</span>
+                  <span className="text-neutral-300">{t('highResFiles')}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">Licença para uso pessoal e comercial</span>
+                  <span className="text-neutral-300">{t('commercialLicense')}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">Suporte e atualizações futuras</span>
+                  <span className="text-neutral-300">{t('supportUpdates')}</span>
                 </li>
               </ul>
             </div>
@@ -118,7 +120,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         {relatedProducts.length > 0 && (
           <section className="mt-20 pt-12 border-t border-lime/20">
             <h2 className="text-3xl font-bold mb-8 text-center text-white animate-fade-in">
-              Você também pode gostar
+              {t('youMayAlsoLike')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
               {relatedProducts.map((relatedProduct) => (

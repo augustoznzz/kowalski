@@ -40,6 +40,35 @@ const translations: Translations = {
   total: { 'pt-BR': 'Total', 'en-US': 'Total' },
   quantity: { 'pt-BR': 'Quantidade', 'en-US': 'Quantity' },
   
+  // Shop page
+  category: { 'pt-BR': 'Categoria', 'en-US': 'Category' },
+  priceRange: { 'pt-BR': 'Faixa de Preço', 'en-US': 'Price Range' },
+  minimum: { 'pt-BR': 'Mínimo', 'en-US': 'Minimum' },
+  maximum: { 'pt-BR': 'Máximo', 'en-US': 'Maximum' },
+  inStock: { 'pt-BR': 'em estoque', 'en-US': 'in stock' },
+  outOfStock: { 'pt-BR': 'Esgotado', 'en-US': 'Out of Stock' },
+  noProductsFound: { 'pt-BR': 'Nenhum produto encontrado.', 'en-US': 'No products found.' },
+  
+  // Checkout page
+  finalizePurchase: { 'pt-BR': 'Finalizar Compra', 'en-US': 'Complete Purchase' },
+  orderSummary: { 'pt-BR': 'Resumo do Pedido', 'en-US': 'Order Summary' },
+  deliveryInfo: { 'pt-BR': 'Informações de Entrega', 'en-US': 'Delivery Information' },
+  emailAddress: { 'pt-BR': 'Endereço de E-mail', 'en-US': 'Email Address' },
+  digitalProductsNote: { 'pt-BR': 'Seus produtos digitais serão enviados para este e-mail.', 'en-US': 'Your digital products will be sent to this email.' },
+  payWithCard: { 'pt-BR': '💳 Pagar com Cartão via Stripe', 'en-US': '💳 Pay with Card via Stripe' },
+  processing: { 'pt-BR': 'Processando...', 'en-US': 'Processing...' },
+  emptyCart: { 'pt-BR': 'Seu carrinho está vazio.', 'en-US': 'Your cart is empty.' },
+  
+  // Product page
+  backToShop: { 'pt-BR': 'Voltar para a loja', 'en-US': 'Back to shop' },
+  detailedDescription: { 'pt-BR': 'Descrição Detalhada', 'en-US': 'Detailed Description' },
+  whatYouGet: { 'pt-BR': 'O que você recebe', 'en-US': 'What you get' },
+  immediateDownload: { 'pt-BR': 'Download Imediato', 'en-US': 'Immediate Download' },
+  highResFiles: { 'pt-BR': 'Arquivos em alta resolução', 'en-US': 'High resolution files' },
+  commercialLicense: { 'pt-BR': 'Licença para uso pessoal e comercial', 'en-US': 'License for personal and commercial use' },
+  supportUpdates: { 'pt-BR': 'Suporte e atualizações futuras', 'en-US': 'Support and future updates' },
+  youMayAlsoLike: { 'pt-BR': 'Você também pode gostar', 'en-US': 'You may also like' },
+  
   // Language names
   portuguese: { 'pt-BR': 'Português', 'en-US': 'Portuguese' },
   english: { 'pt-BR': 'Inglês', 'en-US': 'English' },
@@ -70,6 +99,11 @@ export default function LanguageToggle() {
     
     // Dispatch custom event to notify other components
     window.dispatchEvent(new CustomEvent('languageChange', { detail: lang }));
+    
+    // Force a complete page refresh to ensure all components update
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   const getFlag = (lang: Language) => {
@@ -153,8 +187,10 @@ export default function LanguageToggle() {
 // Hook to use translations
 export function useTranslation() {
   const [currentLang, setCurrentLang] = useState<Language>('pt-BR');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const savedLang = localStorage.getItem('kowalski-language') as Language;
     if (savedLang && ['pt-BR', 'en-US'].includes(savedLang)) {
       setCurrentLang(savedLang);
@@ -164,13 +200,27 @@ export function useTranslation() {
       setCurrentLang(event.detail);
     };
 
+    // Force update all components when language changes
+    const handleStorageChange = () => {
+      const newLang = localStorage.getItem('kowalski-language') as Language;
+      if (newLang && ['pt-BR', 'en-US'].includes(newLang)) {
+        setCurrentLang(newLang);
+      }
+    };
+
     window.addEventListener('languageChange', handleLanguageChange as EventListener);
-    return () => window.removeEventListener('languageChange', handleLanguageChange as EventListener);
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('languageChange', handleLanguageChange as EventListener);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const t = (key: string): string => {
+    if (!mounted) return key; // Return key while mounting to prevent hydration issues
     return translations[key]?.[currentLang] || key;
   };
 
-  return { t, currentLang };
+  return { t, currentLang, mounted };
 }

@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCart } from '@/components/CartContext';
+import { useTranslation } from '@/components/LanguageToggle';
 
 export default function CheckoutClient() {
+  const { t } = useTranslation();
   const { items, total, clearCart } = useCart();
   const searchParams = useSearchParams();
   const [message, setMessage] = useState<{ type: 'success' | 'error' | null; text: string }>({ type: null, text: '' });
@@ -53,10 +55,10 @@ export default function CheckoutClient() {
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans fade-in">
       <div className="w-full max-w-2xl mx-auto px-4 py-12">
         <header className="text-center mb-10">
-          <h1 className="text-4xl font-bold mb-2 text-gray-800">
-            Finalizar Compra
+          <h1 className="text-4xl font-bold mb-2 text-white">
+            {t('finalizePurchase')}
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-neutral-300">
             Complete seu pedido para receber seus produtos digitais.
           </p>
         </header>
@@ -65,8 +67,8 @@ export default function CheckoutClient() {
           <div className={`w-full mx-auto mb-6`}>
             <div className={`p-4 rounded-lg border ${
               message.type === 'success' 
-                ? 'bg-green-50 border-green-400 text-green-800' 
-                : 'bg-red-50 border-red-400 text-red-800'
+                ? 'bg-lime/20 border-lime/40 text-lime' 
+                : 'bg-red-500/20 border-red-500/40 text-red-400'
             }`}>
               {message.text}
             </div>
@@ -74,35 +76,35 @@ export default function CheckoutClient() {
         )}
 
         <main className="flex flex-col gap-8">
-          <section className="bg-white rounded-xl shadow-sm p-6 border border-[var(--neutral-gray)]">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">Resumo do Pedido</h2>
+          <section className="bg-[#3f3e3e] rounded-xl shadow-sm p-6 border border-lime/20 hover:border-lime/40 transition-all duration-500">
+            <h2 className="text-xl font-semibold mb-4 text-white">{t('orderSummary')}</h2>
             {items.length === 0 && !message.type ? (
-              <p className="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>
+              <p className="text-neutral-300 text-center py-8">{t('emptyCart')}</p>
             ) : (
               <>
                 <ul className="mb-4 space-y-3">
                   {items.map(item => (
-                    <li key={item.id} className="flex justify-between items-center text-gray-700">
+                    <li key={item.id} className="flex justify-between items-center text-neutral-300">
                       <span>{item.name} (x{item.quantity})</span>
-                      <span className="font-medium">R$ {(item.price * item.quantity).toFixed(2)}</span>
+                      <span className="font-medium text-lime">R$ {(item.price * item.quantity).toFixed(2)}</span>
                     </li>
                   ))}
                 </ul>
-                <div className="border-t border-[var(--neutral-gray)] pt-4 flex justify-between font-bold text-lg text-gray-800">
-                  <span>Total</span>
-                  <span>R$ {total.toFixed(2)}</span>
+                <div className="border-t border-lime/20 pt-4 flex justify-between font-bold text-lg">
+                  <span className="text-white">{t('total')}</span>
+                  <span className="text-lime animate-pulse-lime">R$ {total.toFixed(2)}</span>
                 </div>
               </>
             )}
           </section>
           
           {items.length > 0 && (
-            <section className="bg-white rounded-xl shadow-sm p-6 border border-[var(--neutral-gray)]">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Informações de Entrega</h2>
+            <section className="bg-[#3f3e3e] rounded-xl shadow-sm p-6 border border-lime/20 hover:border-lime/40 transition-all duration-500">
+              <h2 className="text-xl font-semibold mb-4 text-white">{t('deliveryInfo')}</h2>
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Endereço de E-mail
+                  <label htmlFor="email" className="block text-sm font-medium text-lime mb-1">
+                    {t('emailAddress')}
                   </label>
                   <input
                     type="email"
@@ -110,18 +112,18 @@ export default function CheckoutClient() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="voce@exemplo.com"
-                    className="w-full border border-[var(--neutral-gray)] rounded-lg px-4 py-2 focus:border-[var(--accent)] focus:outline-none transition-colors"
+                    className="w-full border border-lime/30 bg-neutral-700 text-white rounded-lg px-4 py-2 focus:border-lime focus:outline-none transition-all duration-300 placeholder-neutral-400"
                     required
                   />
-                  <p className="text-xs text-gray-500 mt-1">Seus produtos digitais serão enviados para este e-mail.</p>
+                  <p className="text-xs text-neutral-400 mt-1">{t('digitalProductsNote')}</p>
                 </div>
                 
                 <button 
                   onClick={handleCheckout}
                   disabled={isLoading || !email}
-                  className="w-full btn-primary py-3 text-base font-bold flex items-center justify-center gap-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  className="w-full btn-primary py-3 text-base font-bold flex items-center justify-center gap-2 disabled:bg-neutral-600 disabled:cursor-not-allowed disabled:text-neutral-400"
                 >
-                  {isLoading ? 'Processando...' : '💳 Pagar com Cartão via Stripe'}
+                  {isLoading ? t('processing') : t('payWithCard')}
                 </button>
               </div>
             </section>

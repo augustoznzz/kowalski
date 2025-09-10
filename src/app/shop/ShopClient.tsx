@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/components/CartContext';
+import { useTranslation } from '@/components/LanguageToggle';
 import { products, categories, Product } from '@/data/products';
 
 export default function ShopClient() {
+  const { t } = useTranslation();
   const productPrices = products.map(p => p.price);
   const absoluteMinPrice = Math.floor(Math.min(...productPrices));
   const absoluteMaxPrice = Math.ceil(Math.max(...productPrices));
@@ -45,7 +47,7 @@ export default function ShopClient() {
             
             {/* Filtro de Categoria */}
             <div className="flex-1">
-              <label className="block text-sm font-medium text-lime mb-2">Categoria</label>
+              <label className="block text-sm font-medium text-lime mb-2">{t('category')}</label>
               <select 
                 className="w-full border border-lime/30 bg-[#2a2a2a] text-white rounded-lg px-4 py-2 focus:border-lime focus:outline-none transition-all duration-300 hover:bg-[#333333]"
                 value={selectedCategory}
@@ -60,11 +62,11 @@ export default function ShopClient() {
             {/* Filtro de Preço */}
             <div className="flex-1 md:col-span-2">
               <label className="block text-sm font-medium text-lime mb-2">
-                Faixa de Preço: R$ {minPrice.toFixed(0)} - R$ {maxPrice.toFixed(0)}
+                {t('priceRange')}: R$ {minPrice.toFixed(0)} - R$ {maxPrice.toFixed(0)}
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-neutral-300 mb-1">Mínimo</label>
+                  <label className="block text-xs text-neutral-300 mb-1">{t('minimum')}</label>
                   <input
                     type="range"
                     min={absoluteMinPrice}
@@ -78,7 +80,7 @@ export default function ShopClient() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-neutral-300 mb-1">Máximo</label>
+                  <label className="block text-xs text-neutral-300 mb-1">{t('maximum')}</label>
                   <input
                     type="range"
                     min={absoluteMinPrice}
@@ -110,7 +112,7 @@ export default function ShopClient() {
                 <div className="flex justify-between items-center mb-3">
                   <div className="text-lg font-bold text-lime group-hover:animate-pulse-lime">R$ {product.price.toFixed(2)}</div>
                   <div className={`text-xs font-medium px-2 py-1 rounded-full ${product.stock > 0 ? 'bg-lime/20 text-lime' : 'bg-red-500/20 text-red-400'}`}>
-                    {product.stock > 0 ? `${product.stock} em estoque` : 'Esgotado'}
+                    {product.stock > 0 ? `${product.stock} ${t('inStock')}` : t('outOfStock')}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 w-full mt-auto">
@@ -119,10 +121,10 @@ export default function ShopClient() {
                     disabled={product.stock === 0}
                     className="btn-primary w-full py-2 text-sm disabled:bg-neutral-600 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none disabled:text-neutral-400"
                   >
-                    {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Esgotado'}
+                    {product.stock > 0 ? t('addToCart') : t('outOfStock')}
                   </button>
                   <Link href={`/product/${product.id}`} className="text-center text-neutral-300 hover:text-lime hover:underline text-sm transition-colors duration-300">
-                    Ver Detalhes
+                    {t('viewDetails')}
                   </Link>
                 </div>
               </div>
@@ -132,7 +134,7 @@ export default function ShopClient() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-xl text-neutral-300 animate-fade-in">Nenhum produto encontrado.</p>
+            <p className="text-xl text-neutral-300 animate-fade-in">{t('noProductsFound')}</p>
           </div>
         )}
       </div>
