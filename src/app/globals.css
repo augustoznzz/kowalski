@@ -7,6 +7,7 @@
 :root {
   --background: #282828; /* Fundo cinza escuro */
   --foreground: #eaffb7; /* Texto verde claro */
+  --text-secondary: #ffffff; /* Texto secundário branco */
   --accent: #CDFF00;     /* Lime verde para botões e destaques */
   --accent-hover: #B8E600; /* Lime verde mais escuro para hover */
   --accent-dark: #9ACD32; /* Verde lima escuro */
@@ -17,6 +18,33 @@
   --neutral-gray-light: #2a2a2a;
   --font-sans: 'Varela Round', var(--font-varela-round), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+}
+
+/* Classes para textos secundários */
+.text-secondary {
+  color: #ffffff !important;
+}
+
+.text-description {
+  color: #ffffff !important;
+}
+
+/* Garantir que textos de descrição sejam brancos */
+.hero-description,
+.about-description,
+.feature-text,
+.subtitle {
+  color: #ffffff !important;
+}
+
+/* Aplicar branco para textos específicos */
+p.text-gray-300,
+p.text-gray-400,
+p.text-gray-500,
+p.text-gray-600,
+p.text-neutral-200,
+p.text-neutral-300 {
+  color: #ffffff !important;
 }
 
 * {

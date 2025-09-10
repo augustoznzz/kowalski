@@ -6,6 +6,7 @@ import './globals.css';
 import { CartProvider } from '@/components/CartContext';
 import PageTransition from '@/components/PageTransition';
 import LanguageToggle from '@/components/LanguageToggle';
+import HeroNavbar from '@/components/HeroNavbar';
 
 const varelaRound = Varela_Round({
   weight: '400',
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         style={{ backgroundColor: '#282828', color: '#eaffb7' }}
       >
         <CartProvider>
+          <HeroNavbar />
           <PageTransition>
             {children}
           </PageTransition>

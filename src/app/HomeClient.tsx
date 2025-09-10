@@ -10,23 +10,6 @@ export default function HomeClient() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-neutral-900 to-black text-foreground font-sans">
-      <nav className="w-full flex items-center justify-between px-8 py-6 bg-black/90 backdrop-blur-md border-b border-lime/20 shadow-lg sticky top-0 z-30">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight gradient-text">
-          Kowalski
-        </Link>
-        <div className="flex gap-6 items-center">
-          <Link href="/shop" className="nav-link hover:text-lime transition-all duration-300 hover:scale-105">
-            {t('products')}
-          </Link>
-          <Link href="/about" className="nav-link hover:text-lime transition-all duration-300 hover:scale-105">
-            {t('about')}
-          </Link>
-          <Link href="/contact" className="nav-link hover:text-lime transition-all duration-300 hover:scale-105">
-            {t('contact')}
-          </Link>
-        </div>
-      </nav>
-
       {/* Enhanced banner with floating elements */}
       <header className="relative flex flex-col items-center py-20 px-4 text-center w-full overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none">
@@ -38,7 +21,7 @@ export default function HomeClient() {
         <h1 className="text-5xl sm:text-7xl font-extrabold mb-6 tracking-tight animate-fade-in-down gradient-text">
           {t('welcome')}
         </h1>
-        <p className="text-xl sm:text-2xl max-w-4xl text-neutral-200 mb-8 animate-fade-in-up leading-relaxed">
+        <p className="hero-description text-xl sm:text-2xl max-w-4xl mb-8 animate-fade-in-up leading-relaxed">
           {t('homeSubtitle')}
         </p>
         <Link 
@@ -74,7 +57,7 @@ export default function HomeClient() {
               <h3 className="text-lg font-bold mb-2 text-white text-center group-hover:text-lime transition-colors duration-300">
                 {product.name}
               </h3>
-              <p className="text-sm text-neutral-300 mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300">
+              <p className="text-description text-sm mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300">
                 {product.description}
               </p>
               <div className="text-xl font-bold text-lime mb-4 group-hover:scale-110 transition-all duration-300">
@@ -97,7 +80,7 @@ export default function HomeClient() {
           <h3 className="text-3xl font-bold mb-4 text-lime">
             🎉 {t('launchPromotion')}
           </h3>
-          <p className="text-lg text-neutral-200 mb-6 max-w-2xl leading-relaxed">
+          <p className="text-lg mb-6 max-w-2xl leading-relaxed text-description">
             {t('discountText')} 
             <span className="font-bold text-lime bg-black/60 px-4 py-2 rounded-xl ml-2 border border-lime/30">
               KOWALSKI15
@@ -113,7 +96,7 @@ export default function HomeClient() {
       <section className="relative w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
         <div className="text-center">
           <h2 className="text-4xl font-bold mb-6 gradient-text">{t('aboutKowalski')}</h2>
-          <p className="text-lg text-neutral-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="about-description text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
             {t('aboutDescription')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -133,7 +116,7 @@ export default function HomeClient() {
                 <h4 className="text-xl font-bold mb-2 text-white group-hover:text-lime transition-colors duration-300">
                   {item.title}
                 </h4>
-                <p className="text-neutral-300 text-center group-hover:text-neutral-200 transition-colors duration-300">
+                <p className="feature-text text-center group-hover:text-neutral-200 transition-colors duration-300">
                   {item.desc}
                 </p>
               </div>
@@ -169,9 +152,9 @@ export default function HomeClient() {
               ))}
             </div>
           </div>
-          <div className="text-sm text-neutral-400 text-center">
+          <div className="text-sm text-center text-secondary">
             <p>Kowalski © {new Date().getFullYear()} • {t('allRightsReserved')}</p>
-            <p className="mt-2">{t('ecommerceDescription')}</p>
+            <p className="mt-2 text-description">{t('ecommerceDescription')}</p>
           </div>
         </div>
       </footer>
