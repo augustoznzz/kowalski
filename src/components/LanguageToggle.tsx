@@ -26,6 +26,38 @@ const translations: Translations = {
   exploreProducts: { 'pt-BR': 'Explorar Produtos', 'en-US': 'Explore Products' },
   featuredProducts: { 'pt-BR': 'Produtos em Destaque', 'en-US': 'Featured Products' },
   
+  // About section
+  aboutKowalski: { 'pt-BR': 'Sobre a Kowalski', 'en-US': 'About Kowalski' },
+  aboutDescription: { 
+    'pt-BR': 'A Kowalski nasceu para redefinir o conceito de qualidade e simplicidade. Nossos produtos combinam design minimalista com funcionalidade excepcional, criando experiências únicas que transformam o cotidiano em algo extraordinário.',
+    'en-US': 'Kowalski was born to redefine the concept of quality and simplicity. Our products combine minimalist design with exceptional functionality, creating unique experiences that transform everyday life into something extraordinary.'
+  },
+  qualityPremium: { 'pt-BR': 'Qualidade Premium', 'en-US': 'Premium Quality' },
+  qualityPremiumDesc: { 'pt-BR': 'Produtos cuidadosamente selecionados com os mais altos padrões de qualidade.', 'en-US': 'Carefully selected products with the highest quality standards.' },
+  fastDelivery: { 'pt-BR': 'Entrega Rápida', 'en-US': 'Fast Delivery' },
+  fastDeliveryDesc: { 'pt-BR': 'Receba seus produtos rapidamente com rastreamento em tempo real.', 'en-US': 'Receive your products quickly with real-time tracking.' },
+  securePayment: { 'pt-BR': 'Pagamento Seguro', 'en-US': 'Secure Payment' },
+  securePaymentDesc: { 'pt-BR': 'Checkout seguro com Stripe (cartão) e Ramp (cripto).', 'en-US': 'Secure checkout with Stripe (card) and Ramp (crypto).' },
+  knowOurStory: { 'pt-BR': 'Conheça Nossa História', 'en-US': 'Know Our Story' },
+  
+  // Promotion section
+  launchPromotion: { 'pt-BR': 'Promoção de Lançamento', 'en-US': 'Launch Promotion' },
+  discountText: { 
+    'pt-BR': 'Ganhe 15% de desconto na sua primeira compra usando o cupom',
+    'en-US': 'Get 15% off your first purchase using the coupon'
+  },
+  takeOffer: { 'pt-BR': 'Aproveitar Oferta', 'en-US': 'Take Offer' },
+  
+  // Social media
+  followUs: { 'pt-BR': 'Siga-nos nas Redes Sociais', 'en-US': 'Follow Us on Social Media' },
+  instagram: { 'pt-BR': 'Instagram', 'en-US': 'Instagram' },
+  twitter: { 'pt-BR': 'Twitter', 'en-US': 'Twitter' },
+  facebook: { 'pt-BR': 'Facebook', 'en-US': 'Facebook' },
+  
+  // Footer
+  allRightsReserved: { 'pt-BR': 'Todos os direitos reservados', 'en-US': 'All rights reserved' },
+  ecommerceDescription: { 'pt-BR': 'E-commerce de qualidade premium com design minimalista', 'en-US': 'Premium quality e-commerce with minimalist design' },
+  
   // Product actions
   addToCart: { 'pt-BR': 'Adicionar ao Carrinho', 'en-US': 'Add to Cart' },
   viewDetails: { 'pt-BR': 'Ver Detalhes', 'en-US': 'View Details' },
@@ -39,6 +71,7 @@ const translations: Translations = {
   price: { 'pt-BR': 'Preço', 'en-US': 'Price' },
   total: { 'pt-BR': 'Total', 'en-US': 'Total' },
   quantity: { 'pt-BR': 'Quantidade', 'en-US': 'Quantity' },
+  all: { 'pt-BR': 'Todos', 'en-US': 'All' },
   
   // Shop page
   category: { 'pt-BR': 'Categoria', 'en-US': 'Category' },

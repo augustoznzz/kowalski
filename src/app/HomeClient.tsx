@@ -95,16 +95,16 @@ export default function HomeClient() {
       <section className="w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
         <div className="relative rounded-3xl bg-gradient-to-r from-lime/20 via-lime/15 to-lime/10 border border-lime/30 p-12 flex flex-col items-center text-center overflow-hidden">
           <h3 className="text-3xl font-bold mb-4 text-lime">
-            🎉 Promoção de Lançamento
+            🎉 {t('launchPromotion')}
           </h3>
           <p className="text-lg text-neutral-200 mb-6 max-w-2xl leading-relaxed">
-            Ganhe <span className="font-bold text-lime gradient-text">15% de desconto</span> na sua primeira compra usando o cupom 
+            {t('discountText')} 
             <span className="font-bold text-lime bg-black/60 px-4 py-2 rounded-xl ml-2 border border-lime/30">
               KOWALSKI15
             </span>
           </p>
           <Link href="/shop" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-all duration-300">
-            Aproveitar Oferta
+            {t('takeOffer')}
           </Link>
         </div>
       </section>
@@ -112,16 +112,15 @@ export default function HomeClient() {
       {/* Enhanced about section with floating elements */}
       <section className="relative w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
         <div className="text-center">
-          <h2 className="text-4xl font-bold mb-6 gradient-text">Sobre a Kowalski</h2>
+          <h2 className="text-4xl font-bold mb-6 gradient-text">{t('aboutKowalski')}</h2>
           <p className="text-lg text-neutral-200 mb-8 max-w-3xl mx-auto leading-relaxed">
-            A Kowalski nasceu para redefinir o conceito de qualidade e simplicidade. Nossos produtos combinam design minimalista 
-            com funcionalidade excepcional, criando experiências únicas que transformam o cotidiano em algo extraordinário.
+            {t('aboutDescription')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {[
-              { icon: '🎯', title: 'Qualidade Premium', desc: 'Produtos cuidadosamente selecionados com os mais altos padrões de qualidade.' },
-              { icon: '⚡', title: 'Entrega Rápida', desc: 'Receba seus produtos rapidamente com rastreamento em tempo real.' },
-              { icon: '🔒', title: 'Pagamento Seguro', desc: 'Checkout seguro com Stripe (cartão) e Ramp (cripto).' }
+              { icon: '🎯', title: t('qualityPremium'), desc: t('qualityPremiumDesc') },
+              { icon: '⚡', title: t('fastDelivery'), desc: t('fastDeliveryDesc') },
+              { icon: '🔒', title: t('securePayment'), desc: t('securePaymentDesc') }
             ].map((item, index) => (
               <div 
                 key={index}
@@ -140,8 +139,8 @@ export default function HomeClient() {
               </div>
             ))}
           </div>
-          <Link href="/about" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-all duration-300">
-            Conheça Nossa História
+          <Link href="/about" className="btn-primary text-lg px-10 py-4">
+            {t('knowOurStory')}
           </Link>
         </div>
       </section>
@@ -150,12 +149,12 @@ export default function HomeClient() {
       <footer className="w-full py-12 bg-black/95 border-t border-lime/20 mt-16 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 flex flex-col items-center">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">Siga-nos nas Redes Sociais</h3>
+            <h3 className="text-2xl font-bold mb-4 gradient-text">{t('followUs')}</h3>
             <div className="flex gap-6 justify-center">
               {[
-                { icon: '📸', text: 'Instagram', url: 'https://instagram.com' },
-                { icon: '🐦', text: 'Twitter', url: 'https://twitter.com' },
-                { icon: '📘', text: 'Facebook', url: 'https://facebook.com' }
+                { icon: '📸', text: t('instagram'), url: 'https://instagram.com' },
+                { icon: '🐦', text: t('twitter'), url: 'https://twitter.com' },
+                { icon: '📘', text: t('facebook'), url: 'https://facebook.com' }
               ].map((social, index) => (
                 <a 
                   key={index}
@@ -171,8 +170,8 @@ export default function HomeClient() {
             </div>
           </div>
           <div className="text-sm text-neutral-400 text-center">
-            <p>Kowalski © {new Date().getFullYear()} • Todos os direitos reservados</p>
-            <p className="mt-2">E-commerce de qualidade premium com design minimalista</p>
+            <p>Kowalski © {new Date().getFullYear()} • {t('allRightsReserved')}</p>
+            <p className="mt-2">{t('ecommerceDescription')}</p>
           </div>
         </div>
       </footer>

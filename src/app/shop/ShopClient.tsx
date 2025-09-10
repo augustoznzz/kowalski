@@ -38,9 +38,9 @@ export default function ShopClient() {
       <div className="w-full max-w-7xl mx-auto px-4 py-8">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-2 text-[var(--foreground)]">
-            Digital Marketplace
+            {t('shop')}
           </h1>
-          <p className="text-lg text-gray-600">Ativos de alta qualidade para seus projetos criativos.</p>
+          <p className="text-lg text-gray-600">{t('homeSubtitle')}</p>
         </header>
 
         {/* Filtros Horizontais */}
