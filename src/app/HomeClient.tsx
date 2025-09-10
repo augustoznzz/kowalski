@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { CartProvider } from '@/components/CartContext';
 
@@ -17,9 +18,9 @@ export default function HomeClient() {
           <div className="w-full flex justify-center">
             <div className="rounded-2xl bg-gradient-to-r from-[#CDFF00] to-[#b6e600] shadow-lg px-8 py-6 flex flex-col items-center gap-2 scale-on-hover transition-all duration-300">
               <span className="text-black text-xl font-semibold animate-pulse">Bem-vindo à nova experiência de compras online.</span>
-              <a href="/shop" className="btn-primary mt-2 text-base fade-in" style={{ minWidth: 180 }}>
-                Ver Produtos
-              </a>
+                <Link href="/shop" className="btn-primary mt-2 text-base fade-in" style={{ minWidth: 180 }}>
+                  Ver Produtos
+                </Link>
             </div>
           </div>
         </header>

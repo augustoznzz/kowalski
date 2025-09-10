@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link';
 
 export default function LocaleHomePage() {
   return (
@@ -9,9 +10,9 @@ export default function LocaleHomePage() {
       <p className="text-lg text-foreground/80 mb-6 max-w-xl text-center">
         Esta é a página inicial para o idioma selecionado.
       </p>
-      <a href="/shop" className="btn-primary mt-2 text-base fade-in" style={{ minWidth: 180 }}>
+      <Link href="/shop" className="btn-primary mt-2 text-base fade-in" style={{ minWidth: 180 }}>
         Ver Produtos
-      </a>
+      </Link>
     </div>
   );
 }
