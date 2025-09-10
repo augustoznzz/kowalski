@@ -2,8 +2,6 @@
 // import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import Navbar from '@/components/Navbar';
-import { CartProvider } from '@/components/CartContext';
 import './globals.css';
 
 const geistSans = Geist({
@@ -40,10 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`} style={{ backgroundColor: '#fff', color: '#171717' }}>
-        <CartProvider>
-          <Navbar />
-          {children}
-        </CartProvider>
+        {children}
       </body>
     </html>
   );
