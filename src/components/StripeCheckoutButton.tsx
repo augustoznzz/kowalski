@@ -3,7 +3,11 @@ import React from "react";
 import { useCart } from "@/components/CartContext";
 import { useTranslations } from 'next-intl';
 
-export default function StripeCheckoutButton() {
+type StripeCheckoutButtonProps = {
+  amount: number;
+};
+
+export default function StripeCheckoutButton({ amount }: StripeCheckoutButtonProps) {
   const { items } = useCart();
   const t = useTranslations();
 
@@ -11,7 +15,7 @@ export default function StripeCheckoutButton() {
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items }),
+      body: JSON.stringify({ items, amount }),
     });
     const data = await res.json();
     if (data.url) {

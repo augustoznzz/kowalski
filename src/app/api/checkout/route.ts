@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Stripe API key not set." }, { status: 500 });
   }
   const { default: Stripe } = await import("stripe");
-  const stripe = new Stripe(stripeSecretKey, { apiVersion: "2024-04-10" });
+  const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-08-27.basil" });
 
   const { items } = await req.json();
   // Exemplo: [{ id: '1', name: 'Produto 1', price: 199.9, quantity: 1 }]

@@ -1,6 +1,5 @@
 
-
-import { NextIntlClientProvider, useMessages } from 'next-intl';
+// import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Navbar from '@/components/Navbar';
@@ -37,17 +36,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
-  const messages = useMessages();
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={params.locale}>
+    <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`} style={{ backgroundColor: '#fff', color: '#171717' }}>
-        <NextIntlClientProvider locale={params.locale} messages={messages}>
-          <CartProvider>
-            <Navbar />
-            {children}
-          </CartProvider>
-        </NextIntlClientProvider>
+        <CartProvider>
+          <Navbar />
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
