@@ -2,118 +2,173 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { products } from '@/data/products';
+import { useTranslation } from '@/components/LanguageToggle';
 
 export default function HomeClient() {
+  const { t } = useTranslation();
   const featuredProducts = products.filter(product => product.featured);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-green-900 to-black text-foreground font-sans">
-      <nav className="w-full flex items-center justify-between px-8 py-6 bg-black/90 backdrop-blur border-b border-green-900 shadow-sm sticky top-0 z-30">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--accent)' }}>Kowalski</Link>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-neutral-900 to-black text-foreground font-sans">
+      <nav className="w-full flex items-center justify-between px-8 py-6 bg-black/90 backdrop-blur-md border-b border-lime/20 shadow-lg sticky top-0 z-30">
+        <Link href="/" className="text-3xl font-extrabold tracking-tight gradient-text">
+          Kowalski
+        </Link>
         <div className="flex gap-6 items-center">
-          <Link href="/shop" className="hover:text-[var(--accent)] font-medium transition-colors">Produtos</Link>
-          <Link href="/about" className="hover:text-[var(--accent)] font-medium transition-colors">Sobre</Link>
-          <Link href="/contact" className="hover:text-[var(--accent)] font-medium transition-colors">Contato</Link>
+          <Link href="/shop" className="nav-link hover:text-lime transition-all duration-300 hover:scale-105">
+            {t('products')}
+          </Link>
+          <Link href="/about" className="nav-link hover:text-lime transition-all duration-300 hover:scale-105">
+            {t('about')}
+          </Link>
+          <Link href="/contact" className="nav-link hover:text-lime transition-all duration-300 hover:scale-105">
+            {t('contact')}
+          </Link>
         </div>
       </nav>
-      {/* Banner animado */}
-      <header className="flex flex-col items-center py-20 px-4 text-center relative w-full overflow-hidden">
-        <div className="absolute inset-0 w-full h-full pointer-events-none animate-pulse" style={{background: 'radial-gradient(circle at 60% 40%, rgba(0,255,136,0.15) 0, transparent 70%)'}} />
-        <h1 className="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight animate-fade-in-down" style={{ color: 'var(--accent)', letterSpacing: '-0.03em' }}>
-          Bem-vindo à Kowalski
+
+      {/* Enhanced banner with floating elements */}
+      <header className="relative flex flex-col items-center py-20 px-4 text-center w-full overflow-hidden">
+        <div className="absolute inset-0 w-full h-full pointer-events-none">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-lime/10 rounded-full blur-3xl animate-float" style={{animationDelay: '0s'}}></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-lime/15 rounded-full blur-2xl animate-float" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-32 left-1/3 w-40 h-40 bg-lime/8 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
+        </div>
+        
+        <h1 className="text-5xl sm:text-7xl font-extrabold mb-6 tracking-tight animate-fade-in-down gradient-text">
+          {t('welcome')}
         </h1>
-        <p className="text-xl sm:text-2xl max-w-3xl text-neutral-200 mb-8 animate-fade-in-up">
-          Descubra produtos de alta qualidade com design minimalista. Inovação, estilo e funcionalidade para transformar seu dia a dia.
+        <p className="text-xl sm:text-2xl max-w-4xl text-neutral-200 mb-8 animate-fade-in-up leading-relaxed">
+          {t('homeSubtitle')}
         </p>
-        <Link href="/shop" className="btn-primary text-lg px-12 py-4 shadow-lg scale-on-hover animate-bounce" style={{ minWidth: 240, fontWeight: 700, fontSize: '1.3rem' }}>
-          Explorar Produtos
+        <Link 
+          href="/shop" 
+          className="btn-primary text-lg px-12 py-4 shadow-lg animate-bounce-subtle hover:animate-pulse-lime"
+          style={{ minWidth: 280, fontWeight: 700, fontSize: '1.3rem' }}
+        >
+          {t('exploreProducts')}
         </Link>
       </header>
 
-      {/* Destaque de produtos principais */}
+      {/* Enhanced featured products with staggered animations */}
       <section className="w-full max-w-7xl px-4 py-16 mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: 'var(--accent)' }}>Produtos em Destaque</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center gradient-text animate-fade-in">
+          {t('featuredProducts')}
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {featuredProducts.map((product) => (
-            <div key={product.id} className="rounded-2xl border border-green-900 bg-black/70 shadow-xl p-6 flex flex-col items-center scale-on-hover transition-all duration-300 hover:border-[var(--accent)]">
-              <div className="w-24 h-24 bg-[var(--accent)]/10 rounded-lg mb-4 flex items-center justify-center">
-                <Image src={product.image} alt={product.name} width={80} height={80} className="object-contain" />
+          {featuredProducts.map((product, index) => (
+            <div 
+              key={product.id} 
+              className="group rounded-2xl border border-lime/20 bg-black/80 backdrop-blur-sm shadow-xl p-6 flex flex-col items-center transition-all duration-500 hover:border-lime hover:bg-black/90 hover:shadow-2xl hover:shadow-lime/20 animate-fade-in-up glow-border"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="w-24 h-24 bg-gradient-to-br from-lime/20 to-lime/10 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-all duration-500">
+                <Image 
+                  src={product.image} 
+                  alt={product.name} 
+                  width={80} 
+                  height={80} 
+                  className="object-contain group-hover:scale-110 transition-all duration-500" 
+                />
               </div>
-              <h3 className="text-lg font-bold mb-2 text-white text-center">{product.name}</h3>
-              <p className="text-sm text-neutral-300 mb-3 text-center line-clamp-2">{product.description}</p>
-              <div className="text-xl font-bold text-[var(--accent)] mb-4">R$ {product.price.toFixed(2)}</div>
-              <Link href={`/product/${product.id}`} className="btn-primary w-full text-center">
-                Ver Detalhes
+              <h3 className="text-lg font-bold mb-2 text-white text-center group-hover:text-lime transition-colors duration-300">
+                {product.name}
+              </h3>
+              <p className="text-sm text-neutral-300 mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300">
+                {product.description}
+              </p>
+              <div className="text-xl font-bold text-lime mb-4 group-hover:scale-110 transition-all duration-300">
+                R$ {product.price.toFixed(2)}
+              </div>
+              <Link 
+                href={`/product/${product.id}`} 
+                className="btn-primary w-full text-center opacity-90 group-hover:opacity-100 transition-all duration-300"
+              >
+                {t('viewDetails')}
               </Link>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Promoções */}
-      <section className="w-full max-w-5xl px-4 py-16 mx-auto">
-        <div className="rounded-2xl bg-gradient-to-r from-[var(--accent)]/20 to-green-800/20 border border-green-700 p-12 flex flex-col items-center text-center">
-          <h3 className="text-3xl font-bold mb-4 text-[var(--accent)]">🎉 Promoção de Lançamento</h3>
-          <p className="text-lg text-neutral-200 mb-6 max-w-2xl">
-            Ganhe <span className="font-bold text-[var(--accent)]">15% de desconto</span> na sua primeira compra usando o cupom 
-            <span className="font-bold text-[var(--accent)] bg-black/50 px-3 py-1 rounded-lg ml-2">KOWALSKI15</span>
+      {/* Enhanced promotion section */}
+      <section className="w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
+        <div className="relative rounded-3xl bg-gradient-to-r from-lime/20 via-lime/15 to-lime/10 border border-lime/30 p-12 flex flex-col items-center text-center overflow-hidden glow-border">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-lime/5 to-transparent animate-shimmer"></div>
+          <h3 className="text-3xl font-bold mb-4 text-lime animate-pulse-lime">
+            🎉 Promoção de Lançamento
+          </h3>
+          <p className="text-lg text-neutral-200 mb-6 max-w-2xl leading-relaxed">
+            Ganhe <span className="font-bold text-lime gradient-text">15% de desconto</span> na sua primeira compra usando o cupom 
+            <span className="font-bold text-lime bg-black/60 px-4 py-2 rounded-xl ml-2 border border-lime/30 animate-glow">
+              KOWALSKI15
+            </span>
           </p>
-          <Link href="/shop" className="btn-primary text-lg px-8 py-3">
+          <Link href="/shop" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-all duration-300">
             Aproveitar Oferta
           </Link>
         </div>
       </section>
 
-      {/* Introdução à marca */}
-      <section className="w-full max-w-5xl px-4 py-16 mx-auto">
+      {/* Enhanced about section with floating elements */}
+      <section className="relative w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
         <div className="text-center">
-          <h2 className="text-4xl font-bold mb-6" style={{ color: 'var(--accent)' }}>Sobre a Kowalski</h2>
+          <h2 className="text-4xl font-bold mb-6 gradient-text">Sobre a Kowalski</h2>
           <p className="text-lg text-neutral-200 mb-8 max-w-3xl mx-auto leading-relaxed">
             A Kowalski nasceu para redefinir o conceito de qualidade e simplicidade. Nossos produtos combinam design minimalista 
             com funcionalidade excepcional, criando experiências únicas que transformam o cotidiano em algo extraordinário.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full bg-[var(--accent)]/20 flex items-center justify-center mb-4">
-                <span className="text-3xl">🎯</span>
+            {[
+              { icon: '🎯', title: 'Qualidade Premium', desc: 'Produtos cuidadosamente selecionados com os mais altos padrões de qualidade.' },
+              { icon: '⚡', title: 'Entrega Rápida', desc: 'Receba seus produtos rapidamente com rastreamento em tempo real.' },
+              { icon: '🔒', title: 'Pagamento Seguro', desc: 'Checkout seguro com Stripe (cartão) e Ramp (cripto).' }
+            ].map((item, index) => (
+              <div 
+                key={index}
+                className="flex flex-col items-center group animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-lime/20 to-lime/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 border border-lime/20 group-hover:border-lime/40">
+                  <span className="text-4xl group-hover:scale-110 transition-all duration-500">{item.icon}</span>
+                </div>
+                <h4 className="text-xl font-bold mb-2 text-white group-hover:text-lime transition-colors duration-300">
+                  {item.title}
+                </h4>
+                <p className="text-neutral-300 text-center group-hover:text-neutral-200 transition-colors duration-300">
+                  {item.desc}
+                </p>
               </div>
-              <h4 className="text-xl font-bold mb-2 text-white">Qualidade Premium</h4>
-              <p className="text-neutral-300 text-center">Produtos cuidadosamente selecionados com os mais altos padrões de qualidade.</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full bg-[var(--accent)]/20 flex items-center justify-center mb-4">
-                <span className="text-3xl">⚡</span>
-              </div>
-              <h4 className="text-xl font-bold mb-2 text-white">Entrega Rápida</h4>
-              <p className="text-neutral-300 text-center">Receba seus produtos rapidamente com rastreamento em tempo real.</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full bg-[var(--accent)]/20 flex items-center justify-center mb-4">
-                <span className="text-3xl">🔒</span>
-              </div>
-              <h4 className="text-xl font-bold mb-2 text-white">Pagamento Seguro</h4>
-              <p className="text-neutral-300 text-center">Checkout seguro com Stripe (cartão) e Ramp (cripto).</p>
-            </div>
+            ))}
           </div>
-          <Link href="/about" className="btn-primary text-lg px-8 py-3">
+          <Link href="/about" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-all duration-300">
             Conheça Nossa História
           </Link>
         </div>
       </section>
-      <footer className="w-full py-12 bg-black/95 border-t border-green-900 mt-16">
+
+      {/* Enhanced footer */}
+      <footer className="w-full py-12 bg-black/95 border-t border-lime/20 mt-16 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 flex flex-col items-center">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--accent)' }}>Siga-nos nas Redes Sociais</h3>
+            <h3 className="text-2xl font-bold mb-4 gradient-text">Siga-nos nas Redes Sociais</h3>
             <div className="flex gap-6 justify-center">
-              <a href="https://instagram.com" target="_blank" rel="noopener" className="hover:text-[var(--accent)] transition-colors">
-                📸 Instagram
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener" className="hover:text-[var(--accent)] transition-colors">
-                🐦 Twitter
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener" className="hover:text-[var(--accent)] transition-colors">
-                📘 Facebook
-              </a>
+              {[
+                { icon: '📸', text: 'Instagram', url: 'https://instagram.com' },
+                { icon: '🐦', text: 'Twitter', url: 'https://twitter.com' },
+                { icon: '📘', text: 'Facebook', url: 'https://facebook.com' }
+              ].map((social, index) => (
+                <a 
+                  key={index}
+                  href={social.url} 
+                  target="_blank" 
+                  rel="noopener" 
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg hover:text-lime transition-all duration-300 hover:bg-lime/10 hover:scale-105"
+                >
+                  <span className="text-xl">{social.icon}</span>
+                  <span>{social.text}</span>
+                </a>
+              ))}
             </div>
           </div>
           <div className="text-sm text-neutral-400 text-center">
@@ -122,39 +177,6 @@ export default function HomeClient() {
           </div>
         </div>
       </footer>
-
-      {/* Animações CSS */}
-      <style jsx global>{`
-        @keyframes fade-in-down { 
-          from { opacity: 0; transform: translateY(-40px); } 
-          to { opacity: 1; transform: translateY(0); } 
-        }
-        @keyframes fade-in-up { 
-          from { opacity: 0; transform: translateY(40px); } 
-          to { opacity: 1; transform: translateY(0); } 
-        }
-        .animate-fade-in-down { 
-          animation: fade-in-down 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; 
-        }
-        .animate-fade-in-up { 
-          animation: fade-in-up 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; 
-          animation-delay: 0.3s;
-        }
-        .animate-bounce { 
-          animation: bounce 2s infinite; 
-        }
-        @keyframes bounce { 
-          0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
-          40%, 43% { transform: translateY(-10px); }
-          70% { transform: translateY(-5px); }
-        }
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-      `}</style>
     </div>
   );
 }

@@ -1,17 +1,19 @@
 
 // import { NextIntlClientProvider, useMessages } from 'next-intl';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist_Mono, Varela_Round } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/components/CartContext';
 import Navbar from '@/components/Navbar';
 import PageTransition from '@/components/PageTransition';
+import LanguageToggle from '@/components/LanguageToggle';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const varelaRound = Varela_Round({
+  weight: '400',
   subsets: ["latin"],
   display: 'swap',
   preload: true,
+  variable: "--font-varela-round",
 });
 
 const geistMono = Geist_Mono({
@@ -45,7 +47,7 @@ export function generateViewport() {
   return {
     width: 'device-width',
     initialScale: 1,
-    themeColor: '#00ff88'
+    themeColor: '#CDFF00'
   };
 }
 
@@ -57,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body 
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground preload gpu-accelerated`} 
+        className={`${varelaRound.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground transition-all duration-300 ease-smooth`} 
         style={{ backgroundColor: '#0a0a0a', color: '#eaffb7' }}
       >
         <CartProvider>
@@ -65,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <PageTransition>
             {children}
           </PageTransition>
+          <LanguageToggle />
         </CartProvider>
       </body>
     </html>
