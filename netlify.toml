@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+
+[functions]
+  directory = ".netlify/functions"
+
+[environment]
+  NEXT_PUBLIC_STRIPE_PUBLIC_KEY = "YOUR_STRIPE_PUBLIC_KEY"
+  STRIPE_SECRET_KEY = "YOUR_STRIPE_SECRET_KEY"
+  NEXT_PUBLIC_RAMP_API_KEY = "YOUR_RAMP_API_KEY"

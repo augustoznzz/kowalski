@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+
+:root {
+  --background: #fff;
+  --foreground: #171717;
+  --accent: #CDFF00;
+  --accent-hover: #b6e600;
+  --neutral-black: #0a0a0a;
+  --neutral-white: #fff;
+  --neutral-gray: #ededed;
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --neutral-black: #171717;
+    --neutral-white: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Botões e elementos de destaque */
+.btn-primary {
+  background: var(--accent);
+  color: var(--neutral-black);
+  border-radius: 999px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 2px 12px 0 rgba(205,255,0,0.08);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 24px 0 rgba(205,255,0,0.16);
+}
+
+/* Animações sutis */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.7s ease-in forwards;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.scale-on-hover {
+  transition: transform 0.2s;
+}
+.scale-on-hover:hover {
+  transform: scale(1.04);
+}
