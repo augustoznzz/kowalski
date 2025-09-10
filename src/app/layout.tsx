@@ -4,7 +4,6 @@ import type { Metadata } from 'next';
 import { Geist_Mono, Varela_Round } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/components/CartContext';
-import Navbar from '@/components/Navbar';
 import PageTransition from '@/components/PageTransition';
 import LanguageToggle from '@/components/LanguageToggle';
 
@@ -63,7 +62,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         style={{ backgroundColor: '#282828', color: '#eaffb7' }}
       >
         <CartProvider>
-          <Navbar />
           <PageTransition>
             {children}
           </PageTransition>

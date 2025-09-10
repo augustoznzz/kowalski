@@ -93,14 +93,13 @@ export default function HomeClient() {
 
       {/* Enhanced promotion section */}
       <section className="w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
-        <div className="relative rounded-3xl bg-gradient-to-r from-lime/20 via-lime/15 to-lime/10 border border-lime/30 p-12 flex flex-col items-center text-center overflow-hidden glow-border">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-lime/5 to-transparent animate-shimmer"></div>
-          <h3 className="text-3xl font-bold mb-4 text-lime animate-pulse-lime">
+        <div className="relative rounded-3xl bg-gradient-to-r from-lime/20 via-lime/15 to-lime/10 border border-lime/30 p-12 flex flex-col items-center text-center overflow-hidden">
+          <h3 className="text-3xl font-bold mb-4 text-lime">
             🎉 Promoção de Lançamento
           </h3>
           <p className="text-lg text-neutral-200 mb-6 max-w-2xl leading-relaxed">
             Ganhe <span className="font-bold text-lime gradient-text">15% de desconto</span> na sua primeira compra usando o cupom 
-            <span className="font-bold text-lime bg-black/60 px-4 py-2 rounded-xl ml-2 border border-lime/30 animate-glow">
+            <span className="font-bold text-lime bg-black/60 px-4 py-2 rounded-xl ml-2 border border-lime/30">
               KOWALSKI15
             </span>
           </p>
