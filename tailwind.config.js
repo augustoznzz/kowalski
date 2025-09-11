@@ -39,56 +39,65 @@ const config = {
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       animation: {
-        'fade-in': 'fade-in 0.6s ease-out forwards',
-        'fade-in-down': 'fade-in-down 1.2s cubic-bezier(0.4, 0, 0.2, 1) both',
-        'fade-in-up': 'fade-in-up 1.2s cubic-bezier(0.4, 0, 0.2, 1) both',
-        'fade-in-left': 'fade-in-left 0.8s ease-out forwards',
-        'fade-in-right': 'fade-in-right 0.8s ease-out forwards',
-        'scale-on-hover': 'scale-on-hover 0.3s ease-in-out',
-        'bounce-subtle': 'bounce-subtle 2s infinite',
-        'float': 'float 3s ease-in-out infinite',
-        'slide-up': 'slide-up 0.5s ease-out forwards',
-        'slide-down': 'slide-down 0.5s ease-out forwards',
+        'fade-in': 'fadeIn 0.8s ease-out forwards',
+        'fade-in-down': 'fadeInDown 1.2s cubic-bezier(0.4, 0, 0.2, 1) both',
+        'fade-in-up': 'fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) both',
+        'fade-in-left': 'fadeInLeft 0.8s ease-out forwards',
+        'fade-in-right': 'fadeInRight 0.8s ease-out forwards',
+        'scale-on-hover': 'scaleOnHover 0.3s ease-in-out',
+        'bounce-subtle': 'bounceSubtle 3s infinite',
+        'float': 'float 4s ease-in-out infinite',
+        'pulse-lime': 'pulseLime 2s infinite',
+        'slide-up': 'slideUp 0.5s ease-out forwards',
+        'slide-down': 'slideDown 0.5s ease-out forwards',
       },
       keyframes: {
-        'fade-in': {
-          'from': { opacity: '0' },
-          'to': { opacity: '1' }
+        fadeIn: {
+          'from': { opacity: '0', transform: 'translateY(20px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' }
         },
-        'fade-in-down': {
+        fadeInDown: {
           'from': { opacity: '0', transform: 'translateY(-40px)' },
           'to': { opacity: '1', transform: 'translateY(0)' }
         },
-        'fade-in-up': {
+        fadeInUp: {
           'from': { opacity: '0', transform: 'translateY(40px)' },
           'to': { opacity: '1', transform: 'translateY(0)' }
         },
-        'fade-in-left': {
+        fadeInLeft: {
           'from': { opacity: '0', transform: 'translateX(-40px)' },
           'to': { opacity: '1', transform: 'translateX(0)' }
         },
-        'fade-in-right': {
+        fadeInRight: {
           'from': { opacity: '0', transform: 'translateX(40px)' },
           'to': { opacity: '1', transform: 'translateX(0)' }
         },
-        'scale-on-hover': {
+        scaleOnHover: {
           'from': { transform: 'scale(1)' },
           'to': { transform: 'scale(1.05)' }
         },
-        'bounce-subtle': {
+        bounceSubtle: {
           '0%, 20%, 53%, 80%, 100%': { transform: 'translateY(0)' },
           '40%, 43%': { transform: 'translateY(-8px)' },
           '70%': { transform: 'translateY(-4px)' }
         },
-        'float': {
+        float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' }
+          '50%': { transform: 'translateY(-15px)' }
         },
-        'slide-up': {
+        pulseLime: {
+          '0%, 100%': { 
+            boxShadow: '0 0 0 0 rgba(205, 255, 0, 0.7)' 
+          },
+          '70%': {
+            boxShadow: '0 0 0 10px rgba(205, 255, 0, 0)'
+          }
+        },
+        slideUp: {
           'from': { transform: 'translateY(100%)', opacity: '0' },
           'to': { transform: 'translateY(0)', opacity: '1' }
         },
-        'slide-down': {
+        slideDown: {
           'from': { transform: 'translateY(-100%)', opacity: '0' },
           'to': { transform: 'translateY(0)', opacity: '1' }
         }
