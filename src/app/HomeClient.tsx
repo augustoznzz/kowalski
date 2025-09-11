@@ -80,8 +80,6 @@ export default function HomeClient() {
       <section className="w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
         <div className="flex justify-center items-center">
           <div className="animated-card">
-            <div className="bg uwu"></div>
-            <div className="bg"></div>
             <div className="content">
               <div className="img">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

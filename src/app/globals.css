@@ -185,16 +185,7 @@ body {
   }
 }
 
-/* Animated Card Styles - Fixed text overflow */
-.animated-card {
-  position: relative;
-  width: 240px;
-  color: white;
-  height: 320px;
-  background: #444;
-  border-radius: 14px;
-  overflow: hidden;
-}
+/* Enhanced Animated Card Styles with gradient border only */
 
 .animated-card .bg {
   position: absolute;
@@ -466,45 +457,45 @@ body {
   width: 280px;
   height: 380px;
   color: white;
-  background: #444;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  
+  /* Gradient border effect using border-image fallback for better compatibility */
+  background: 
+    linear-gradient(#444, #444) padding-box,
+    conic-gradient(
+      hsl(0, 100%, 50%),
+      hsl(30, 100%, 50%),
+      hsl(60, 100%, 50%),
+      hsl(90, 100%, 50%),
+      hsl(120, 100%, 50%),
+      hsl(150, 100%, 50%),
+      hsl(180, 100%, 50%),
+      hsl(210, 100%, 50%),
+      hsl(240, 100%, 60%),
+      hsl(270, 100%, 50%),
+      hsl(300, 100%, 50%),
+      hsl(330, 100%, 50%),
+      hsl(360, 100%, 50%)
+    ) border-box;
+  border: 4px solid transparent;
+  
+  /* Fallback for browsers that don't support the above */
+  background-color: #444;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 4px transparent;
 }
 
-.animated-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(205, 255, 0, 0.2);
-}
-
-.animated-card .bg {
-  position: absolute;
-  z-index: -1;
-  inset: -4px;
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 4px;
-}
-
-.animated-card .uwu {
-  filter: blur(12px);
-  transition: filter 0.4s;
-}
-
-.animated-card:hover .uwu {
-  filter: blur(8px);
-}
-
-.animated-card .bg::before {
+.animated-card::before {
   content: '';
   position: absolute;
-  aspect-ratio: 1/1;
-  top: 50%;
-  left: 50%;
-  min-width: 160%;
-  min-height: 160%;
-  background-image: conic-gradient(
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: conic-gradient(
     hsl(0, 100%, 50%),
     hsl(30, 100%, 50%),
     hsl(60, 100%, 50%),
@@ -519,27 +510,37 @@ body {
     hsl(330, 100%, 50%),
     hsl(360, 100%, 50%)
   );
-  animation: speeen 6s linear infinite;
-  transform-origin: 0% 0%;
-  transform: rotate(0deg) translate(-50%, -50%);
+  border-radius: 20px;
+  z-index: -1;
+  animation: rotateGradient 6s linear infinite;
 }
 
-.animated-card .bg::after {
+.animated-card::after {
   content: '';
   position: absolute;
-  inset: 4px;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
   background: #444;
-  border-radius: 16px;
-  z-index: 1;
+  border-radius: 12px;
+  z-index: -1;
 }
 
-@keyframes speeen {
-  from {
-    transform: rotate(0deg) translate(-50%, -50%);
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
   }
-  to {
-    transform: rotate(360deg) translate(-50%, -50%);
+  100% {
+    transform: rotate(360deg);
   }
+}
+
+.animated-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px rgba(205, 255, 0, 0.2),
+    inset 0 0 0 4px transparent;
 }
 
 .animated-card .content {
@@ -551,7 +552,7 @@ body {
   justify-content: space-between;
   box-sizing: border-box;
   text-align: center;
-  z-index: 2;
+  z-index: 1;
 }
 
 .animated-card .img {
