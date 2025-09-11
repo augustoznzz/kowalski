@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   try {
     const { name, email, subject, message } = await request.json();
@@ -14,6 +12,18 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Verificar se a API key do Resend está configurada
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY não está configurada');
+      return NextResponse.json(
+        { error: 'Serviço de email não configurado. Entre em contato através de suporte@kowalski.com' },
+        { status: 503 }
+      );
+    }
+
+    // Inicializar Resend apenas quando necessário
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Enviar email
     const { error } = await resend.emails.send({
