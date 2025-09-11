@@ -460,7 +460,7 @@ body {
   overflow: hidden;
 }
 
-/* Enhanced Animated Card Styles with perfect text alignment */
+/* Enhanced Animated Card Styles with gradient border only */
 .animated-card {
   position: relative;
   width: 280px;
@@ -484,6 +484,7 @@ body {
   inset: -4px;
   border-radius: 20px;
   overflow: hidden;
+  padding: 4px;
 }
 
 .animated-card .uwu {
@@ -523,6 +524,15 @@ body {
   transform: rotate(0deg) translate(-50%, -50%);
 }
 
+.animated-card .bg::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: #444;
+  border-radius: 16px;
+  z-index: 1;
+}
+
 @keyframes speeen {
   from {
     transform: rotate(0deg) translate(-50%, -50%);
@@ -541,6 +551,7 @@ body {
   justify-content: space-between;
   box-sizing: border-box;
   text-align: center;
+  z-index: 2;
 }
 
 .animated-card .img {
