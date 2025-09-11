@@ -168,7 +168,6 @@ const translations: Translations = {
   messagePlaceholder: { 'pt-BR': 'Descreva sua dúvida ou mensagem...', 'en-US': 'Describe your question or message...' },
   sendMessageBtn: { 'pt-BR': 'Enviar Mensagem', 'en-US': 'Send Message' },
   otherContact: { 'pt-BR': 'Outras Formas de Contato', 'en-US': 'Other Ways to Contact' },
-  generalQuestions: { 'pt-BR': 'Para dúvidas gerais:', 'en-US': 'For general questions:' },
   technicalSupportEmail: { 'pt-BR': 'Para suporte técnico:', 'en-US': 'For technical support:' },
   businessHours: { 'pt-BR': 'Horário de Atendimento', 'en-US': 'Business Hours' },
   mondayFriday: { 'pt-BR': 'Segunda a Sexta: 9h às 18h', 'en-US': 'Monday to Friday: 9am to 6pm' },
@@ -193,13 +192,11 @@ export default function LanguageToggle() {
 
   useEffect(() => {
     const savedLang = localStorage.getItem('kowalski-language') as Language;
-    const browserLang = navigator.language;
     
     if (savedLang && ['pt-BR', 'en-US'].includes(savedLang)) {
       setCurrentLang(savedLang);
-    } else if (browserLang.startsWith('en')) {
-      setCurrentLang('en-US');
     } else {
+      // Sempre usar português como padrão
       setCurrentLang('pt-BR');
     }
   }, []);

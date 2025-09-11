@@ -1,0 +1,20 @@
+{
+  "name": "Kowalski - Loja Virtual Minimalista",
+  "short_name": "Kowalski",
+  "description": "Produtos genéricos de alta qualidade com design minimalista",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#282828",
+  "theme_color": "#CDFF00",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "lang": "pt-BR",
+  "dir": "ltr"
+}

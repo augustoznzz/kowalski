@@ -5,19 +5,19 @@
 
 /* Paleta: Cinza escuro (fundo), Lime Verde (destaque), Branco (texto) */
 :root {
-  --background: #282828; /* Fundo cinza escuro */
-  --foreground: #eaffb7; /* Texto verde claro */
-  --text-secondary: #ffffff; /* Texto secundário branco */
-  --accent: #CDFF00;     /* Lime verde para botões e destaques */
-  --accent-hover: #B8E600; /* Lime verde mais escuro para hover */
-  --accent-dark: #9ACD32; /* Verde lima escuro */
-  --accent-light: #E6FF66; /* Verde lima claro */
+  --background: #282828;
+  --foreground: #eaffb7;
+  --text-secondary: #ffffff;
+  --accent: #CDFF00;
+  --accent-hover: #B8E600;
+  --accent-dark: #9ACD32;
+  --accent-light: #E6FF66;
   --neutral-black: #000;
-  --neutral-white: #3f3e3e; /* Mudando branco para cinza escuro */
-  --neutral-gray: #1e1e1e; /* Cinza escuro para bordas */
+  --neutral-white: #3f3e3e;
+  --neutral-gray: #1e1e1e;
   --neutral-gray-light: #2a2a2a;
   --font-sans: 'Gilan', system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 /* Classes para textos secundários */
@@ -30,7 +30,6 @@
 }
 
 /* Garantir que textos de descrição sejam brancos */
-.hero-description,
 .about-description,
 .feature-text,
 .subtitle {
@@ -42,7 +41,6 @@ p.text-gray-300,
 p.text-gray-400,
 p.text-gray-500,
 p.text-gray-600,
-p.text-neutral-200,
 p.text-neutral-300 {
   color: #ffffff !important;
 }
@@ -51,8 +49,17 @@ p.text-neutral-300 {
   box-sizing: border-box;
 }
 
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -61,32 +68,14 @@ body {
   font-family: var(--font-sans);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
 }
 
-/* Smooth animations for all elements */
-* {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Remove transitions for initial page load */
-.preload * {
-  transition: none !important;
-}
-
-/* Page transitions */
-.page-transition {
-  animation: pageEnter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes pageEnter {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+/* Smooth animations for elements that need it */
+.smooth-transition {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Enhanced button styles with lime green */
@@ -105,8 +94,6 @@ body {
   position: relative;
   overflow: hidden;
 }
-
-
 
 .btn-primary:hover {
   background: var(--accent-hover);
@@ -198,14 +185,15 @@ body {
   }
 }
 
-/* Animated Card Styles */
+/* Animated Card Styles - Fixed text overflow */
 .animated-card {
   position: relative;
-  width: 190px;
+  width: 240px;
   color: white;
-  height: 260px;
+  height: 320px;
   background: #444;
   border-radius: 14px;
+  overflow: hidden;
 }
 
 .animated-card .bg {
@@ -260,15 +248,21 @@ body {
 
 .animated-card .content {
   position: relative;
-  padding: 14px 16px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .animated-card .img {
-  height: 5em;
-  width: 5em;
-  margin: auto;
+  height: 4em;
+  width: 4em;
+  margin: 0 auto 1em;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 1em;
+  flex-shrink: 0;
 }
 
 .animated-card .img svg {
@@ -281,21 +275,80 @@ body {
 }
 
 .animated-card .h1 {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-  font-size: 1em;
+  font-size: 1.1em;
   font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.8em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-shrink: 0;
 }
 
 .animated-card .p {
-  font-size: 0.75em;
+  font-size: 0.8em;
+  line-height: 1.3;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .animated-card .p p {
-  margin-top: 0.5em;
-  padding: 0.5em;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 1em;
+  margin-top: 0.6em;
+  padding: 0.8em;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 0.8em;
+  font-size: 0.85em;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-align: justify;
+}
+
+/* Profile block (replaces previous h1/p structure inside animated card) */
+.animated-card .profile-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+  width: 100%;
+}
+
+.animated-card .profile-name {
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.animated-card .profile-role {
+  font-size: 0.75em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.animated-card .profile-quote {
+  margin: 0.5em 0 0;
+  font-size: 0.68em;
+  line-height: 1.4;
+  background: rgba(0,0,0,0.35);
+  padding: 0.6em 0.7em;
+  border-radius: 0.6em;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .animated-card .profile-name { font-size: 0.95em; }
+  .animated-card .profile-role { font-size: 0.65em; }
+  .animated-card .profile-quote { font-size: 0.6em; padding: 0.5em; }
 }
 
 /* Enhanced hamburger menu */
@@ -394,56 +447,83 @@ body {
   50% { transform: translateY(-10px); }
 }
 
-/* Enhanced slider with lime styling */
-.slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 8px;
-  background: var(--neutral-gray);
-  outline: none;
-  border-radius: 4px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Layout fixes to prevent overflow */
+.glow-border:hover {
+  box-shadow: 0 0 20px rgba(205, 255, 0, 0.3);
 }
 
-.slider:hover {
-  background: var(--neutral-gray-light);
-  box-shadow: 0 0 10px rgba(205, 255, 0, 0.2);
+/* Responsive text fixes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  border: 3px solid var(--background);
-  box-shadow: 0 0 15px rgba(205, 255, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Container fixes */
+.container-fix {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-.slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 25px rgba(205, 255, 0, 0.6);
+/* Text overflow fixes */
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.slider::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  border: 3px solid var(--background);
-  box-shadow: 0 0 15px rgba(205, 255, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
 }
 
-/* Responsive font sizing */
+/* Responsive font sizing and layout fixes */
 @media (max-width: 768px) {
   html {
     font-size: 14px;
+  }
+  
+  .animated-card {
+    width: 200px;
+    height: 280px;
+  }
+  
+  .animated-card .content {
+    padding: 16px;
+  }
+  
+  .animated-card .h1 {
+    font-size: 1em;
+  }
+  
+  .animated-card .p {
+    font-size: 0.75em;
+  }
+  
+  .animated-card .p p {
+    padding: 0.6em;
+    font-size: 0.85em;
+  }
+  
+  /* Fix potential overflow issues on mobile */
+  .btn-primary {
+    min-width: auto;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  /* Ensure grid items don't overflow */
+  .grid {
+    gap: 1rem;
   }
 }
 
@@ -451,4 +531,45 @@ body {
   html {
     font-size: 13px;
   }
+  
+  .animated-card {
+    width: 180px;
+    height: 260px;
+  }
+  
+  .animated-card .content {
+    padding: 12px;
+  }
+  
+  .animated-card .h1 {
+    font-size: 0.9em;
+  }
+  
+  .animated-card .p p {
+    font-size: 0.8em;
+  }
+  
+  /* Ensure buttons fit on small screens */
+  .btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Adjust header text for very small screens */
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-7xl {
+    font-size: 3rem;
+  }
+}
+
+/* Responsive font sizing */
+@media (max-width: 768px) {
+  html { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 13px; }
 }

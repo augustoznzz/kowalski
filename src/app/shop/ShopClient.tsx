@@ -38,7 +38,7 @@ export default function ShopClient() {
           <h1 className="text-4xl font-bold mb-2 text-[var(--foreground)]">
             {t('shop')}
           </h1>
-          <p className="text-lg text-gray-600">{t('homeSubtitle')}</p>
+          <p className="text-lg text-neutral-200">{t('homeSubtitle')}</p>
         </header>
 
         {/* Filtros Horizontais */}

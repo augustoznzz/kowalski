@@ -9,44 +9,37 @@ export default function HomeClient() {
   const featuredProducts = products.filter(product => product.featured);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-neutral-900 to-black text-foreground font-sans">
-      {/* Enhanced banner with floating elements */}
-      <header className="relative flex flex-col items-center py-20 px-4 text-center w-full overflow-hidden">
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-lime/10 rounded-full blur-3xl animate-float" style={{animationDelay: '0s'}}></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-lime/15 rounded-full blur-2xl animate-float" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-32 left-1/3 w-40 h-40 bg-lime/8 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-        </div>
-        
-        <h1 className="text-5xl sm:text-7xl font-extrabold mb-6 tracking-tight animate-fade-in-down gradient-text">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-neutral-900 to-black text-foreground font-sans container-fix">
+      {/* Hero (animations removed for simplicity/performance) */}
+      <header className="relative flex flex-col items-center py-16 md:py-20 px-4 text-center w-full">
+        <h1 className="font-extrabold mb-6 tracking-tight gradient-text text-center max-w-5xl text-[clamp(2.5rem,6vw,4.5rem)]">
           {t('welcome')}
         </h1>
-        <p className="hero-description text-xl sm:text-2xl max-w-4xl mb-8 animate-fade-in-up leading-relaxed">
+        <p className="text-xl sm:text-2xl max-w-3xl mb-8 leading-relaxed px-4 text-neutral-200">
           {t('homeSubtitle')}
         </p>
         <Link 
           href="/shop" 
-          className="btn-primary text-lg px-12 py-4 shadow-lg animate-bounce-subtle hover:animate-pulse-lime"
+          className="btn-primary text-lg px-12 py-4 shadow-lg"
           style={{ minWidth: 280, fontWeight: 700, fontSize: '1.3rem' }}
         >
           {t('exploreProducts')}
         </Link>
       </header>
 
-      {/* Enhanced featured products with staggered animations */}
-      <section className="w-full max-w-7xl px-4 py-16 mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center gradient-text animate-fade-in">
+      {/* Featured products (animations removed) */}
+      <section className="w-full max-w-7xl px-4 py-16 mx-auto overflow-hidden">
+        <h2 className="text-4xl font-bold mb-10 md:mb-12 text-center gradient-text">
           {t('featuredProducts')}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {featuredProducts.map((product, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 justify-items-center">
+          {featuredProducts.map((product) => (
             <div 
               key={product.id} 
-              className="group rounded-2xl border border-lime/20 bg-black/80 backdrop-blur-sm shadow-xl p-6 flex flex-col items-center justify-between transition-all duration-500 hover:border-lime hover:bg-black/90 hover:shadow-2xl hover:shadow-lime/20 animate-fade-in-up glow-border min-h-[320px]"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="group rounded-2xl border border-lime/20 bg-black/80 backdrop-blur-sm shadow-xl p-6 flex flex-col items-center justify-between transition-all duration-300 hover:border-lime hover:bg-black/90 hover:shadow-2xl hover:shadow-lime/20 glow-border min-h-[320px] w-full max-w-[280px]"
             >
-              <div className="flex flex-col items-center flex-1">
-                <div className="w-24 h-24 bg-gradient-to-br from-lime/20 to-lime/10 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-all duration-500">
+              <div className="flex flex-col items-center flex-1 w-full">
+                <div className="w-24 h-24 bg-gradient-to-br from-lime/20 to-lime/10 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-all duration-500 flex-shrink-0">
                   <Image 
                     src={product.image} 
                     alt={product.name} 
@@ -55,10 +48,10 @@ export default function HomeClient() {
                     className="object-contain group-hover:scale-110 transition-all duration-500" 
                   />
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-white text-center group-hover:text-lime transition-colors duration-300">
+                <h3 className="text-lg font-bold mb-2 text-white text-center group-hover:text-lime transition-colors duration-300 w-full">
                   {product.name}
                 </h3>
-                <p className="text-description text-sm mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300">
+                <p className="text-description text-sm mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300 w-full">
                   {product.description}
                 </p>
                 <div className="text-xl font-bold text-lime mb-4 group-hover:scale-110 transition-all duration-300">
@@ -76,9 +69,9 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* Animated Card Section */}
-      <section className="w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
-        <div className="flex justify-center">
+      {/* Animated Card Section - Fixed container */}
+      <section className="w-full max-w-5xl px-4 py-16 mx-auto">
+        <div className="flex justify-center items-center">
           <div className="animated-card">
             <div className="bg uwu"></div>
             <div className="bg"></div>
@@ -88,22 +81,18 @@ export default function HomeClient() {
                   <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
                 </svg>
               </div>
-              <div className="h1">
-                Augusto <br />Zuanazzi
-              </div>
-              <div className="p">
-                Developer
-                <p>
-                  Trust the process, even when the results have not yet appeared.
-                </p>
+              <div className="profile-block">
+                <h3 className="profile-name">Augusto Zuanazzi</h3>
+                <p className="profile-role">Developer</p>
+                <p className="profile-quote">Trust the process, even when the results have not yet appeared.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Enhanced about section with floating elements */}
-      <section className="relative w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
+      {/* About section simplified */}
+      <section className="relative w-full max-w-5xl px-4 py-16 mx-auto">
         <div className="text-center">
           <h2 className="text-4xl font-bold mb-6 gradient-text">{t('aboutKowalski')}</h2>
           <p className="about-description text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -117,8 +106,7 @@ export default function HomeClient() {
             ].map((item, index) => (
               <div 
                 key={index}
-                className="flex flex-col items-center group animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.2}s` }}
+                className="flex flex-col items-center group"
               >
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-lime/20 to-lime/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-500 border border-lime/20 group-hover:border-lime/40">
                   <span className="text-4xl group-hover:scale-110 transition-all duration-500">{item.icon}</span>

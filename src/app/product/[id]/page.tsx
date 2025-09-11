@@ -68,14 +68,14 @@ export default function ProductPage({ params }: ProductPageProps) {
               <h1 className="text-4xl font-bold mb-4 text-white">
                 {product.name}
               </h1>
-              <p className="text-lg text-neutral-300 mb-6 leading-relaxed">
+              <p className="text-lg text-neutral-200 mb-6 leading-relaxed">
                 {product.description}
               </p>
             </div>
 
             <div className="bg-[#3f3e3e] border border-lime/20 rounded-xl p-6 hover:border-lime/40 transition-all duration-500">
               <h3 className="text-lg font-semibold mb-3 text-white">{t('detailedDescription')}</h3>
-              <p className="text-neutral-300 leading-relaxed">
+              <p className="text-neutral-200 leading-relaxed">
                 {product.detailedDescription}
               </p>
             </div>
@@ -109,19 +109,19 @@ export default function ProductPage({ params }: ProductPageProps) {
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">{t('immediateDownload')}</span>
+                  <span className="text-neutral-200">{t('immediateDownload')}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">{t('highResFiles')}</span>
+                  <span className="text-neutral-200">{t('highResFiles')}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">{t('commercialLicense')}</span>
+                  <span className="text-neutral-200">{t('commercialLicense')}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-lime animate-pulse-subtle">✓</span>
-                  <span className="text-neutral-300">{t('supportUpdates')}</span>
+                  <span className="text-neutral-200">{t('supportUpdates')}</span>
                 </li>
               </ul>
             </div>
