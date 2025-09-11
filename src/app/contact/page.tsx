@@ -112,47 +112,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Redes sociais */}
-            <div>
-              <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--accent)' }}>
-                {t('followSocial')}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
-                  rel="noopener" 
-                  className="bg-black/70 border border-green-900 rounded-xl p-4 text-center hover:border-[var(--accent)] transition-colors"
-                >
-                  <div className="text-2xl mb-2">📸</div>
-                  <div className="text-[var(--accent)] font-medium">Instagram</div>
-                  <div className="text-neutral-400 text-sm">@kowalski_oficial</div>
-                </a>
-                
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener" 
-                  className="bg-black/70 border border-green-900 rounded-xl p-4 text-center hover:border-[var(--accent)] transition-colors"
-                >
-                  <div className="text-2xl mb-2">🐦</div>
-                  <div className="text-[var(--accent)] font-medium">Twitter</div>
-                  <div className="text-neutral-400 text-sm">@kowalski_br</div>
-                </a>
-                
-                <a 
-                  href="https://facebook.com" 
-                  target="_blank" 
-                  rel="noopener" 
-                  className="bg-black/70 border border-green-900 rounded-xl p-4 text-center hover:border-[var(--accent)] transition-colors"
-                >
-                  <div className="text-2xl mb-2">📘</div>
-                  <div className="text-[var(--accent)] font-medium">Facebook</div>
-                  <div className="text-neutral-400 text-sm">Kowalski Oficial</div>
-                </a>
-              </div>
-            </div>
-
             {/* FAQ rápido */}
             <div className="bg-gradient-to-r from-[var(--accent)]/10 to-green-800/10 border border-green-700 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-4 text-[var(--accent)]">{t('faq')}</h3>

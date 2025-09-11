@@ -42,30 +42,32 @@ export default function HomeClient() {
           {featuredProducts.map((product, index) => (
             <div 
               key={product.id} 
-              className="group rounded-2xl border border-lime/20 bg-black/80 backdrop-blur-sm shadow-xl p-6 flex flex-col items-center transition-all duration-500 hover:border-lime hover:bg-black/90 hover:shadow-2xl hover:shadow-lime/20 animate-fade-in-up glow-border"
+              className="group rounded-2xl border border-lime/20 bg-black/80 backdrop-blur-sm shadow-xl p-6 flex flex-col items-center justify-between transition-all duration-500 hover:border-lime hover:bg-black/90 hover:shadow-2xl hover:shadow-lime/20 animate-fade-in-up glow-border min-h-[320px]"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-24 h-24 bg-gradient-to-br from-lime/20 to-lime/10 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-all duration-500">
-                <Image 
-                  src={product.image} 
-                  alt={product.name} 
-                  width={80} 
-                  height={80} 
-                  className="object-contain group-hover:scale-110 transition-all duration-500" 
-                />
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-white text-center group-hover:text-lime transition-colors duration-300">
-                {product.name}
-              </h3>
-              <p className="text-description text-sm mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300">
-                {product.description}
-              </p>
-              <div className="text-xl font-bold text-lime mb-4 group-hover:scale-110 transition-all duration-300">
-                R$ {product.price.toFixed(2)}
+              <div className="flex flex-col items-center flex-1">
+                <div className="w-24 h-24 bg-gradient-to-br from-lime/20 to-lime/10 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-all duration-500">
+                  <Image 
+                    src={product.image} 
+                    alt={product.name} 
+                    width={80} 
+                    height={80} 
+                    className="object-contain group-hover:scale-110 transition-all duration-500" 
+                  />
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-white text-center group-hover:text-lime transition-colors duration-300">
+                  {product.name}
+                </h3>
+                <p className="text-description text-sm mb-3 text-center line-clamp-2 group-hover:text-neutral-200 transition-colors duration-300">
+                  {product.description}
+                </p>
+                <div className="text-xl font-bold text-lime mb-4 group-hover:scale-110 transition-all duration-300">
+                  R$ {product.price.toFixed(2)}
+                </div>
               </div>
               <Link 
                 href={`/product/${product.id}`} 
-                className="btn-primary w-full text-center opacity-90 group-hover:opacity-100 transition-all duration-300"
+                className="btn-primary w-full text-center opacity-90 group-hover:opacity-100 transition-all duration-300 mt-auto"
               >
                 {t('viewDetails')}
               </Link>
@@ -74,21 +76,29 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* Enhanced promotion section */}
+      {/* Animated Card Section */}
       <section className="w-full max-w-5xl px-4 py-16 mx-auto animate-fade-in">
-        <div className="relative rounded-3xl bg-gradient-to-r from-lime/20 via-lime/15 to-lime/10 border border-lime/30 p-12 flex flex-col items-center text-center overflow-hidden">
-          <h3 className="text-3xl font-bold mb-4 text-lime">
-            🎉 {t('launchPromotion')}
-          </h3>
-          <p className="text-lg mb-6 max-w-2xl leading-relaxed text-description">
-            {t('discountText')} 
-            <span className="font-bold text-lime bg-black/60 px-4 py-2 rounded-xl ml-2 border border-lime/30">
-              KOWALSKI15
-            </span>
-          </p>
-          <Link href="/shop" className="btn-primary text-lg px-10 py-4 hover:scale-105 transition-all duration-300">
-            {t('takeOffer')}
-          </Link>
+        <div className="flex justify-center">
+          <div className="animated-card">
+            <div className="bg uwu"></div>
+            <div className="bg"></div>
+            <div className="content">
+              <div className="img">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+                </svg>
+              </div>
+              <div className="h1">
+                Augusto <br />Zuanazzi
+              </div>
+              <div className="p">
+                Developer
+                <p>
+                  Trust the process, even when the results have not yet appeared.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -147,7 +157,7 @@ export default function HomeClient() {
           </div>
           <div className="text-sm text-center text-secondary">
             <p>Kowalski © {new Date().getFullYear()} • {t('allRightsReserved')}</p>
-            <p className="mt-2 text-description">{t('ecommerceDescription')}</p>
+            <p className="mt-2 text-description">{t('')}</p>
           </div>
         </div>
       </footer>
