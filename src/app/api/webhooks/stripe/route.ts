@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { Resend } from 'resend';
-import { render } from '@react-email/render';
-import React from 'react';
-import PurchaseReceiptEmail from '@/emails/PurchaseReceipt';
+import nodemailer from 'nodemailer';
+import { generateEmailHTML } from '@/emails/PurchaseReceiptHTML';
 import { products } from '@/data/products';
 
 export async function POST(req: NextRequest) {
@@ -40,14 +38,25 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
 
     try {
-      // Initialize Resend only when needed
-      const resendApiKey = process.env.RESEND_API_KEY;
-      if (!resendApiKey) {
-        console.error("RESEND_API_KEY is not set.");
+      // Initialize SMTP transporter
+      const smtpHost = process.env.SMTP_HOST;
+      const smtpUser = process.env.SMTP_USER;
+      const smtpPass = process.env.SMTP_PASS;
+      
+      if (!smtpHost || !smtpUser || !smtpPass) {
+        console.error("SMTP configuration not set.");
         return NextResponse.json({ error: 'Email service not configured.' }, { status: 500 });
       }
       
-      const resend = new Resend(resendApiKey);
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: 587,
+        secure: false,
+        auth: {
+          user: smtpUser,
+          pass: smtpPass
+        }
+      });
 
       // Retrieve the session with line items
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
@@ -80,16 +89,14 @@ export async function POST(req: NextRequest) {
         };
       }).filter(p => p !== null) as (typeof products[0] & { downloadUrl: string })[];
 
-      // Send the purchase receipt email using React.createElement
-      const emailElement = React.createElement(PurchaseReceiptEmail, { 
-        products: purchasedProducts, 
-        orderId: session.id 
+      // Generate the email HTML using our simple template
+      const emailHtml = generateEmailHTML({
+        products: purchasedProducts,
+        orderId: session.id
       });
-      
-      const emailHtml = await render(emailElement);
 
-      await resend.emails.send({
-        from: 'Kowalski <onboarding@resend.dev>',
+      await transporter.sendMail({
+        from: 'Kowalski <noreply@kowalski.com>',
         to: customerEmail,
         subject: 'Sua compra na Kowalski',
         html: emailHtml,

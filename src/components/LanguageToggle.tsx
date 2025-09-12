@@ -191,7 +191,7 @@ export default function LanguageToggle() {
   const [currentLang, setCurrentLang] = useState<Language>('pt-BR');
 
   useEffect(() => {
-    const savedLang = localStorage.getItem('kowalski-language') as Language;
+    const savedLang = typeof window !== 'undefined' ? localStorage.getItem('kowalski-language') as Language : null;
     
     if (savedLang && ['pt-BR', 'en-US'].includes(savedLang)) {
       setCurrentLang(savedLang);
@@ -203,11 +203,13 @@ export default function LanguageToggle() {
 
   const switchLanguage = (lang: Language) => {
     setCurrentLang(lang);
-    localStorage.setItem('kowalski-language', lang);
-    window.dispatchEvent(new CustomEvent('languageChange', { detail: lang }));
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('kowalski-language', lang);
+      window.dispatchEvent(new CustomEvent('languageChange', { detail: lang }));
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    }
   };
 
   return (
@@ -239,7 +241,7 @@ export function useTranslation() {
 
   useEffect(() => {
     setMounted(true);
-    const savedLang = localStorage.getItem('kowalski-language') as Language;
+    const savedLang = typeof window !== 'undefined' ? localStorage.getItem('kowalski-language') as Language : null;
     if (savedLang && ['pt-BR', 'en-US'].includes(savedLang)) {
       setCurrentLang(savedLang);
     }
@@ -249,18 +251,22 @@ export function useTranslation() {
     };
 
     const handleStorageChange = () => {
-      const newLang = localStorage.getItem('kowalski-language') as Language;
+      const newLang = typeof window !== 'undefined' ? localStorage.getItem('kowalski-language') as Language : null;
       if (newLang && ['pt-BR', 'en-US'].includes(newLang)) {
         setCurrentLang(newLang);
       }
     };
 
-    window.addEventListener('languageChange', handleLanguageChange as EventListener);
-    window.addEventListener('storage', handleStorageChange);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('languageChange', handleLanguageChange as EventListener);
+      window.addEventListener('storage', handleStorageChange);
+    }
     
     return () => {
-      window.removeEventListener('languageChange', handleLanguageChange as EventListener);
-      window.removeEventListener('storage', handleStorageChange);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('languageChange', handleLanguageChange as EventListener);
+        window.removeEventListener('storage', handleStorageChange);
+      }
     };
   }, []);
 

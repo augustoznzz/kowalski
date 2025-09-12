@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { Resend } from 'resend';
-import { render } from '@react-email/render';
-import React from 'react';
-import PurchaseReceiptEmail from '@/emails/PurchaseReceipt';
-import { products } from '@/data/products';
+import nodemailer from 'nodemailer';
+import { generateEmailHTML } from '@/emails/PurchaseReceiptHTML';
+import { products, Product } from '@/data/products';
 
 export async function POST(req: NextRequest) {
   // Initialize Stripe with environment variable check
@@ -41,14 +39,25 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
 
     try {
-      // Initialize Resend only when needed
-      const resendApiKey = process.env.RESEND_API_KEY;
-      if (!resendApiKey) {
-        console.error("RESEND_API_KEY is not set.");
+      // Initialize SMTP transporter
+      const smtpHost = process.env.SMTP_HOST;
+      const smtpUser = process.env.SMTP_USER;
+      const smtpPass = process.env.SMTP_PASS;
+      
+      if (!smtpHost || !smtpUser || !smtpPass) {
+        console.error("SMTP configuration not set.");
         return NextResponse.json({ error: 'Email service not configured.' }, { status: 500 });
       }
       
-      const resend = new Resend(resendApiKey);
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: 587,
+        secure: false,
+        auth: {
+          user: smtpUser,
+          pass: smtpPass
+        }
+      });
 
       // Retrieve the session with line items
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
@@ -68,7 +77,7 @@ export async function POST(req: NextRequest) {
 
       const purchasedProducts = lineItems.map(item => {
         const product = item.price?.product as Stripe.Product;
-        const localProduct = products.find(p => p.id === product.metadata.product_id);
+        const localProduct = products.find((p: Product) => p.id === product.metadata.product_id);
         
         if (!localProduct) {
           console.warn(`Product with ID ${product.metadata.product_id} not found in local data.`);
@@ -81,16 +90,14 @@ export async function POST(req: NextRequest) {
         };
       }).filter(p => p !== null) as (typeof products[0] & { downloadUrl: string })[];
 
-      // Send the purchase receipt email using React.createElement
-      const emailElement = React.createElement(PurchaseReceiptEmail, { 
-        products: purchasedProducts, 
-        orderId: session.id 
+      // Generate the email HTML using our simple template
+      const emailHtml = generateEmailHTML({
+        products: purchasedProducts,
+        orderId: session.id
       });
-      
-      const emailHtml = await render(emailElement);
 
-      await resend.emails.send({
-        from: 'Kowalski <onboarding@resend.dev>',
+      await transporter.sendMail({
+        from: 'Kowalski <noreply@kowalski.com>',
         to: customerEmail,
         subject: 'Sua compra na Kowalski',
         html: emailHtml,
@@ -104,4 +111,89 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({ received: true });
+}
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  downloadUrl: string;
+}
+
+interface EmailData {
+  products: Product[];
+  orderId: string;
+}
+
+export function generateEmailHTML({ products, orderId }: EmailData): string {
+  const productsList = products.map(product => `
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #eee;">
+        <strong>${product.name}</strong><br>
+        R$ ${(product.price / 100).toFixed(2).replace('.', ',')}
+      </td>
+      <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">
+        <a href="${product.downloadUrl}" style="background-color: #000; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">Download</a>
+      </td>
+    </tr>
+  `).join('');
+
+  const total = products.reduce((sum, product) => sum + product.price, 0);
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Recibo de Compra - Kowalski</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #000; margin: 0;">Kowalski</h1>
+        <p style="color: #666; margin: 5px 0;">Obrigado pela sua compra!</p>
+      </div>
+      
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h2 style="margin: 0 0 10px 0; color: #000;">Detalhes do Pedido</h2>
+        <p><strong>Número do Pedido:</strong> ${orderId}</p>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: #000;">Produtos Adquiridos:</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+          <thead>
+            <tr style="background-color: #f0f0f0;">
+              <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Produto</th>
+              <th style="padding: 10px; text-align: center; border-bottom: 2px solid #ddd;">Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${productsList}
+          </tbody>
+          <tfoot>
+            <tr style="background-color: #f9f9f9;">
+              <td style="padding: 15px; font-weight: bold; border-top: 2px solid #ddd;">
+                Total: R$ ${(total / 100).toFixed(2).replace('.', ',')}
+              </td>
+              <td style="padding: 15px; border-top: 2px solid #ddd;"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      
+      <div style="background-color: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <p style="margin: 0; color: #666;">
+          <strong>Instruções:</strong> Clique nos links de download acima para baixar seus produtos. 
+          Os links estarão disponíveis por 30 dias a partir da data da compra.
+        </p>
+      </div>
+      
+      <div style="text-align: center; color: #666; font-size: 14px; border-top: 1px solid #eee; padding-top: 20px;">
+        <p>Em caso de dúvidas, entre em contato conosco.</p>
+        <p>&copy; ${new Date().getFullYear()} Kowalski. Todos os direitos reservados.</p>
+      </div>
+    </body>
+    </html>
+  `;
 }

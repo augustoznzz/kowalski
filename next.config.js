@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   // Force webpack and disable turbopack completely
   webpack: (config, { dev }) => {
     // Force webpack compilation and disable any turbopack references

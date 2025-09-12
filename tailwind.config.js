@@ -33,9 +33,9 @@ const config = {
         },
       },
       fontFamily: {
-        sans: ['Varela Round', 'system-ui', 'sans-serif'],
-        display: ['Varela Round', 'system-ui', 'sans-serif'],
-        body: ['Varela Round', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       animation: {
